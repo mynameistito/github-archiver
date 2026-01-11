@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/mynameistito/github-archiver/compare/v1.0.6...v1.0.7) (2026-01-11)
+
+
+### Bug Fixes
+
+* update version number in source code to match package.json ([f9ef48c](https://github.com/mynameistito/github-archiver/commit/f9ef48c344cf46e2ebb37141a9db211bddf57d47))
+
 ## [1.0.6](https://github.com/mynameistito/github-archiver/compare/v1.0.5...v1.0.6) (2026-01-11)
 
 
