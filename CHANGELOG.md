@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/mynameistito/github-archiver/compare/v1.0.3...v1.0.4) (2026-01-11)
+
+
+### Bug Fixes
+
+* add repository URL to package.json for npm provenance ([02ddb1c](https://github.com/mynameistito/github-archiver/commit/02ddb1c9f4b6a7b7ca91497b2633011accf94356))
+
 ## [1.0.3](https://github.com/mynameistito/github-archiver/compare/v1.0.2...v1.0.3) (2026-01-11)
 
 ## [1.0.2](https://github.com/mynameistito/github-archiver/compare/v1.0.1...v1.0.2) (2026-01-11)
