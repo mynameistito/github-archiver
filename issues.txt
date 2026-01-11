@@ -1,0 +1,1105 @@
+src\commands\archive.ts:29:16 lint/complexity/noExcessiveCognitiveComplexity ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Excessive complexity of 25 detected (max: 20).
+  
+    27 │ }
+    28 │ 
+  > 29 │ async function archiveCommand(options: CommandOptions): Promise<void> {
+       │                ^^^^^^^^^^^^^^
+    30 │   try {
+    31 │     logger.info("Archive command started", { options });
+  
+  i Please refactor this function to reduce its complexity score from 25 to the max allowed complexity 20.
+  
+
+src\commands\archive.ts:77:9 lint/suspicious/noEvolvingTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The type of this variable may evolve implicitly to any type, including the any type.
+  
+    75 │     console.log("📝 Getting repositories...");
+    76 │ 
+  > 77 │     let repositories = [];
+       │         ^^^^^^^^^^^^
+    78 │     let parseErrors: Array<{ url: string; error: string; line: number }> = [];
+    79 │ 
+  
+  i Add an explicit type or initialization to avoid implicit type evolution.
+  
+
+src\commands\archive.ts:103:7 lint/complexity/noForEach ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Prefer for...of instead of forEach.
+  
+    101 │     if (parseErrors.length > 0) {
+    102 │       console.warn(`!�  Found ${parseErrors.length} invalid repositories:`);
+  > 103 │       parseErrors.forEach((err) => {
+        │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 104 │         console.warn(`   Line ${err.line}: ${err.error}`);
+  > 105 │       });
+        │       ^^
+    106 │       console.warn("");
+    107 │     }
+  
+  i forEach may lead to performance issues when working with large arrays. When combined with functions like filter or map, this causes multiple iterations over the same type.
+  
+
+src\commands\archive.ts:174:7 lint/complexity/noForEach ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Prefer for...of instead of forEach.
+  
+    172 │       console.log("");
+    173 │       console.log("❌ Failed repositories:");
+  > 174 │       results
+        │       ^^^^^^^
+  > 175 │         .filter((r) => !r.success)
+  > 176 │         .forEach((r) => {
+  > 177 │           console.log(`   ${r.owner}/${r.repo}: ${r.message}`);
+  > 178 │         });
+        │         ^^
+    179 │     }
+    180 │ 
+  
+  i forEach may lead to performance issues when working with large arrays. When combined with functions like filter or map, this causes multiple iterations over the same type.
+  
+
+src\commands\archive.ts:185:7 lint/complexity/noForEach ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Prefer for...of instead of forEach.
+  
+    183 │       console.log("");
+    184 │       console.log("!�  Skipped repositories:");
+  > 185 │       results
+        │       ^^^^^^^
+  > 186 │         .filter((r) => r.success && !r.archived)
+  > 187 │         .forEach((r) => {
+  > 188 │           console.log(`   ${r.owner}/${r.repo}: ${r.message}`);
+  > 189 │         });
+        │         ^^
+    190 │     }
+    191 │ 
+  
+  i forEach may lead to performance issues when working with large arrays. When combined with functions like filter or map, this causes multiple iterations over the same type.
+  
+
+src\commands\archive.ts:269:17 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Unexpected any. Specify a different type.
+  
+    267 │ async function archiveRepositories(
+    268 │   archiver: Archiver,
+  > 269 │   repositories: any[],
+        │                 ^^^
+    270 │   options: any,
+    271 │   progressDisplay: ProgressDisplay
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src\commands\archive.ts:270:12 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Unexpected any. Specify a different type.
+  
+    268 │   archiver: Archiver,
+    269 │   repositories: any[],
+  > 270 │   options: any,
+        │            ^^^
+    271 │   progressDisplay: ProgressDisplay
+    272 │ ): Promise<any[]> {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src\commands\archive.ts:272:12 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Unexpected any. Specify a different type.
+  
+    270 │   options: any,
+    271 │   progressDisplay: ProgressDisplay
+  > 272 │ ): Promise<any[]> {
+        │            ^^^
+    273 │   const results = await archiver.archiveRepositories(repositories, options);
+    274 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src\commands\archive.ts:284:17 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Template literals are preferred over string concatenation.
+  
+    283 │   if (progressDisplay.shouldUpdate()) {
+  > 284 │     console.log("\r" + progressDisplay.getProgressBar(progress));
+        │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    285 │   }
+    286 │ 
+  
+  i Unsafe fix: Use a template literal.
+  
+    282 282 │   
+    283 283 │     if (progressDisplay.shouldUpdate()) {
+    284     │ - ····console.log("\r"·+·progressDisplay.getProgressBar(progress));
+        284 │ + ····console.log(`\r${progressDisplay.getProgressBar(progress)}`);
+    285 285 │     }
+    286 286 │   
+  
+
+src\commands\auth.ts:2:33 lint/style/useNodejsImportProtocol  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × A Node.js builtin module should be imported with the node: protocol.
+  
+    1 │ import { Command } from "commander";
+  > 2 │ import { createInterface } from "readline";
+      │                                 ^^^^^^^^^^
+    3 │ import { MESSAGES } from "../constants/messages";
+    4 │ import { PATHS } from "../constants/paths";
+  
+  i Using the node: protocol is more explicit and signals that the imported module belongs to Node.js.
+  
+  i Unsafe fix: Add the node: protocol.
+  
+      1   1 │   import { Command } from "commander";
+      2     │ - import·{·createInterface·}·from·"readline";
+          2 │ + import·{·createInterface·}·from·"node:readline";
+      3   3 │   import { MESSAGES } from "../constants/messages";
+      4   4 │   import { PATHS } from "../constants/paths";
+  
+
+src\commands\index.ts:1:1 lint/performance/noBarrelFile ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Avoid barrel files, they slow down performance, and cause large module graphs with modules that go unused.
+  
+  > 1 │ export { createArchiveCommand } from "./archive";
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ export { createAuthCommand } from "./auth";
+    3 │ 
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+src\constants\paths.ts:1:25 lint/style/useNodejsImportProtocol  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × A Node.js builtin module should be imported with the node: protocol.
+  
+  > 1 │ import { homedir } from "os";
+      │                         ^^^^
+    2 │ import { join } from "path";
+    3 │ 
+  
+  i Using the node: protocol is more explicit and signals that the imported module belongs to Node.js.
+  
+  i Unsafe fix: Add the node: protocol.
+  
+     1    │ - import·{·homedir·}·from·"os";
+        1 │ + import·{·homedir·}·from·"node:os";
+     2  2 │   import { join } from "path";
+     3  3 │   
+  
+
+src\constants\paths.ts:2:22 lint/style/useNodejsImportProtocol  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × A Node.js builtin module should be imported with the node: protocol.
+  
+    1 │ import { homedir } from "os";
+  > 2 │ import { join } from "path";
+      │                      ^^^^^^
+    3 │ 
+    4 │ const appDir = join(homedir(), ".github-archiver");
+  
+  i Using the node: protocol is more explicit and signals that the imported module belongs to Node.js.
+  
+  i Unsafe fix: Add the node: protocol.
+  
+     1  1 │   import { homedir } from "os";
+     2    │ - import·{·join·}·from·"path";
+        2 │ + import·{·join·}·from·"node:path";
+     3  3 │   
+     4  4 │   const appDir = join(homedir(), ".github-archiver");
+  
+
+src\services\archiver.ts:13:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'queue' is never reassigned.
+  
+    12 │ export class Archiver {
+  > 13 │   private queue: PQueue;
+       │           ^^^^^
+    14 │   private results: ArchiveResult[] = [];
+    15 │   private readonly gitHubService: GitHubService;
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    13 │ ··private·readonly·queue:·PQueue;
+       │           +++++++++              
+
+src\services\archiver.ts:13:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'queue' is never reassigned.
+  
+    12 │ export class Archiver {
+  > 13 │   private queue: PQueue;
+       │           ^^^^^
+    14 │   private results: ArchiveResult[] = [];
+    15 │   private readonly gitHubService: GitHubService;
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    13 │ ··private·readonly·queue:·PQueue;
+       │           +++++++++              
+
+src\services\archiver.ts:18:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'startTime' is never reassigned.
+  
+    16 │   private completed = 0;
+    17 │   private failed = 0;
+  > 18 │   private startTime = 0;
+       │           ^^^^^^^^^
+    19 │ 
+    20 │   constructor(gitHubService: GitHubService, options: ArchiveOptions) {
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    18 │ ··private·readonly·startTime·=·0;
+       │           +++++++++              
+
+src\services\archiver.ts:18:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'startTime' is never reassigned.
+  
+    16 │   private completed = 0;
+    17 │   private failed = 0;
+  > 18 │   private startTime = 0;
+       │           ^^^^^^^^^
+    19 │ 
+    20 │   constructor(gitHubService: GitHubService, options: ArchiveOptions) {
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    18 │ ··private·readonly·startTime·=·0;
+       │           +++++++++              
+
+src\services\auth-manager.ts:61:14 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × This variable error is unused.
+  
+    59 │         user: data.login,
+    60 │       };
+  > 61 │     } catch (error) {
+       │              ^^^^^
+    62 │       return {
+    63 │         valid: false,
+  
+  i Unused variables are often the result of typos, incomplete refactors, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend error with an underscore.
+  
+    59 59 │           user: data.login,
+    60 60 │         };
+    61    │ - ····}·catch·(error)·{
+       61 │ + ····}·catch·(_error)·{
+    62 62 │         return {
+    63 63 │           valid: false,
+  
+
+src\services\auth-manager.ts:68:3 lint/suspicious/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × This async function lacks an await expression.
+  
+    66 │   }
+    67 │ 
+  > 68 │   async getStoredCredentials(): Promise<StoredCredentials | null> {
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 69 │     return this.configManager.getStoredCredentials();
+  > 70 │   }
+       │   ^
+    71 │ 
+    72 │   async ensureConfigDir(): Promise<void> {
+  
+  i Remove this async modifier, or add an await expression in the function.
+  
+    66 │   }
+    67 │ 
+  > 68 │   async getStoredCredentials(): Promise<StoredCredentials | null> {
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 69 │     return this.configManager.getStoredCredentials();
+  > 70 │   }
+       │   ^
+    71 │ 
+    72 │   async ensureConfigDir(): Promise<void> {
+  
+  i Async functions without await expressions may not need to be declared async.
+  
+
+src\services\auth-manager.ts:76:3 lint/suspicious/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × This async function lacks an await expression.
+  
+    74 │   }
+    75 │ 
+  > 76 │   async loadConfig(): Promise<Config> {
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 77 │     return this.configManager.loadConfig();
+  > 78 │   }
+       │   ^
+    79 │ }
+    80 │ 
+  
+  i Remove this async modifier, or add an await expression in the function.
+  
+    74 │   }
+    75 │ 
+  > 76 │   async loadConfig(): Promise<Config> {
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 77 │     return this.configManager.loadConfig();
+  > 78 │   }
+       │   ^
+    79 │ }
+    80 │ 
+  
+  i Async functions without await expressions may not need to be declared async.
+  
+
+src\services\auth-manager.ts:8:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'configManager' is never reassigned.
+  
+     7 │ export class AuthManager {
+   > 8 │   private configManager: ConfigManager;
+       │           ^^^^^^^^^^^^^
+     9 │ 
+    10 │   constructor(configDir: string = PATHS.APP_DIR) {
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    8 │ ··private·readonly·configManager:·ConfigManager;
+      │           +++++++++                             
+
+src\services\auth-manager.ts:8:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'configManager' is never reassigned.
+  
+     7 │ export class AuthManager {
+   > 8 │   private configManager: ConfigManager;
+       │           ^^^^^^^^^^^^^
+     9 │ 
+    10 │   constructor(configDir: string = PATHS.APP_DIR) {
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    8 │ ··private·readonly·configManager:·ConfigManager;
+      │           +++++++++                             
+
+src\services\github.ts:25:42 lint/complexity/noExcessiveCognitiveComplexity ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Excessive complexity of 26 detected (max: 20).
+  
+    23 │     logger.debug(`Attempting to archive ${owner}/${repo}`);
+    24 │ 
+  > 25 │     await this.retryWithBackoff(async () => {
+       │                                          ^^^
+    26 │       try {
+    27 │         await this.octokit.rest.repos.update({
+  
+  i Please refactor this function to reduce its complexity score from 26 to the max allowed complexity 20.
+  
+
+src\services\github.ts:36:34 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Unexpected any. Specify a different type.
+  
+    34 │       } catch (error) {
+    35 │         const message = error instanceof Error ? error.message : String(error);
+  > 36 │         const status = (error as any)?.status;
+       │                                  ^^^
+    37 │         const code = (error as any)?.response?.data?.message;
+    38 │ 
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src\services\github.ts:37:32 lint/suspicious/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Unexpected any. Specify a different type.
+  
+    35 │         const message = error instanceof Error ? error.message : String(error);
+    36 │         const status = (error as any)?.status;
+  > 37 │         const code = (error as any)?.response?.data?.message;
+       │                                ^^^
+    38 │ 
+    39 │         logger.error(`Failed to archive ${owner}/${repo}: ${message}`, {
+  
+  i any disables many type checking rules. Its use should be avoided.
+  
+
+src\services\github.ts:54:11 lint/style/useCollapsedIf ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × This if statement can be collapsed into another if statement.
+  
+    52 │         if (status === 422) {
+    53 │           // Already archived or other validation error
+  > 54 │           if (message.includes("archived")) {
+       │           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 55 │             throw new Error(`Repository ${owner}/${repo} is already archived`);
+  > 56 │           }
+       │           ^
+    57 │         }
+    58 │ 
+  
+
+src\services\github.ts:15:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'octokit' is never reassigned.
+  
+    14 │ export class GitHubService {
+  > 15 │   private octokit: Octokit;
+       │           ^^^^^^^
+    16 │ 
+    17 │   constructor(token: string) {
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    15 │ ··private·readonly·octokit:·Octokit;
+       │           +++++++++                 
+
+src\services\github.ts:15:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'octokit' is never reassigned.
+  
+    14 │ export class GitHubService {
+  > 15 │   private octokit: Octokit;
+       │           ^^^^^^^
+    16 │ 
+    17 │   constructor(token: string) {
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    15 │ ··private·readonly·octokit:·Octokit;
+       │           +++++++++                 
+
+src\services\index.ts:1:1 lint/performance/noBarrelFile ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Avoid barrel files, they slow down performance, and cause large module graphs with modules that go unused.
+  
+  > 1 │ export { Archiver } from "./archiver";
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ export { AuthManager } from "./auth-manager";
+    3 │ export { GitHubService } from "./github";
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+src\types\error.ts:1:8 lint/style/noEnum ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Don't use enum
+  
+   > 1 │ export enum ErrorCode {
+       │        ^^^^^^^^^^^^^^^^
+   > 2 │   INVALID_AUTH = "INVALID_AUTH",
+   > 3 │   REPO_NOT_FOUND = "REPO_NOT_FOUND",
+   > 4 │   ALREADY_ARCHIVED = "ALREADY_ARCHIVED",
+        ...
+  > 12 │   FILE_ERROR = "FILE_ERROR",
+  > 13 │ }
+       │ ^
+    14 │ 
+    15 │ export class ArchiveError extends Error {
+  
+  i TypeScript enums are not a type-level extension to JavaScript like type annotations or definitions. Users may wish to disable non-type-level extensions to use bundlers or compilers that only strip types.
+  
+  i Use JavaScript objects or TypeScript unions instead.
+  
+
+src\types\error.ts:17:5 lint/style/useConsistentMemberAccessibility ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The public modifier is disallowed.
+  
+    15 │ export class ArchiveError extends Error {
+    16 │   constructor(
+  > 17 │     public code: ErrorCode,
+       │     ^^^^^^
+    18 │     message: string,
+    19 │     public statusCode?: number,
+  
+  i Remove the accessibility modifier.
+  
+
+src\types\error.ts:17:5 lint/style/noParameterProperties ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Use a more explicit class property instead of a parameter property.
+  
+    15 │ export class ArchiveError extends Error {
+    16 │   constructor(
+  > 17 │     public code: ErrorCode,
+       │     ^^^^^^^^^^^^^^^^^^^^^^
+    18 │     message: string,
+    19 │     public statusCode?: number,
+  
+  i Parameter properties are less explicit than other ways of declaring and initializing class properties.
+  
+
+src\types\error.ts:19:5 lint/style/useConsistentMemberAccessibility ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The public modifier is disallowed.
+  
+    17 │     public code: ErrorCode,
+    18 │     message: string,
+  > 19 │     public statusCode?: number,
+       │     ^^^^^^
+    20 │     public retryable = false
+    21 │   ) {
+  
+  i Remove the accessibility modifier.
+  
+
+src\types\error.ts:19:5 lint/style/noParameterProperties ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Use a more explicit class property instead of a parameter property.
+  
+    17 │     public code: ErrorCode,
+    18 │     message: string,
+  > 19 │     public statusCode?: number,
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    20 │     public retryable = false
+    21 │   ) {
+  
+  i Parameter properties are less explicit than other ways of declaring and initializing class properties.
+  
+
+src\types\error.ts:20:5 lint/style/useConsistentMemberAccessibility ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The public modifier is disallowed.
+  
+    18 │     message: string,
+    19 │     public statusCode?: number,
+  > 20 │     public retryable = false
+       │     ^^^^^^
+    21 │   ) {
+    22 │     super(message);
+  
+  i Remove the accessibility modifier.
+  
+
+src\types\error.ts:20:5 lint/style/noParameterProperties ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Use a more explicit class property instead of a parameter property.
+  
+    18 │     message: string,
+    19 │     public statusCode?: number,
+  > 20 │     public retryable = false
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^
+    21 │   ) {
+    22 │     super(message);
+  
+  i Parameter properties are less explicit than other ways of declaring and initializing class properties.
+  
+
+src\types\index.ts:1:1 lint/performance/noBarrelFile ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Avoid barrel files, they slow down performance, and cause large module graphs with modules that go unused.
+  
+  > 1 │ export * from "./config";
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ export * from "./error";
+    3 │ export * from "./github";
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+src\utils\colors.ts:1:8 lint/complexity/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Avoid classes that contain only static members.
+  
+   > 1 │ export class Colors {
+       │        ^^^^^^^^^^^^^^
+   > 2 │   // ANSI color codes
+   > 3 │   private static readonly RESET = "\x1b[0m";
+   > 4 │   private static readonly BRIGHT = "\x1b[1m";
+        ...
+  > 66 │     return colors[status](icons[status]);
+  > 67 │   }
+  > 68 │ }
+       │ ^
+    69 │ 
+  
+  i Prefer using simple functions instead of classes with only static members.
+  
+
+src\utils\config.ts:14:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'configFile' is never reassigned.
+  
+    12 │ export class ConfigManager {
+    13 │   private configDir: string;
+  > 14 │   private configFile: string;
+       │           ^^^^^^^^^^
+    15 │ 
+    16 │   constructor(configDir: string = PATHS.APP_DIR) {
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    14 │ ··private·readonly·configFile:·string;
+       │           +++++++++                   
+
+src\utils\config.ts:1:32 lint/style/useNodejsImportProtocol  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × A Node.js builtin module should be imported with the node: protocol.
+  
+  > 1 │ import { promises as fs } from "fs";
+      │                                ^^^^
+    2 │ import { join } from "path";
+    3 │ import {
+  
+  i Using the node: protocol is more explicit and signals that the imported module belongs to Node.js.
+  
+  i Unsafe fix: Add the node: protocol.
+  
+     1    │ - import·{·promises·as·fs·}·from·"fs";
+        1 │ + import·{·promises·as·fs·}·from·"node:fs";
+     2  2 │   import { join } from "path";
+     3  3 │   import {
+  
+
+src\utils\config.ts:2:22 lint/style/useNodejsImportProtocol  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × A Node.js builtin module should be imported with the node: protocol.
+  
+    1 │ import { promises as fs } from "fs";
+  > 2 │ import { join } from "path";
+      │                      ^^^^^^
+    3 │ import {
+    4 │   DEFAULT_CONCURRENCY,
+  
+  i Using the node: protocol is more explicit and signals that the imported module belongs to Node.js.
+  
+  i Unsafe fix: Add the node: protocol.
+  
+     1  1 │   import { promises as fs } from "fs";
+     2    │ - import·{·join·}·from·"path";
+        2 │ + import·{·join·}·from·"node:path";
+     3  3 │   import {
+     4  4 │     DEFAULT_CONCURRENCY,
+  
+
+src\utils\config.ts:13:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'configDir' is never reassigned.
+  
+    12 │ export class ConfigManager {
+  > 13 │   private configDir: string;
+       │           ^^^^^^^^^
+    14 │   private configFile: string;
+    15 │ 
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    13 │ ··private·readonly·configDir:·string;
+       │           +++++++++                  
+
+src\utils\config.ts:13:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'configDir' is never reassigned.
+  
+    12 │ export class ConfigManager {
+  > 13 │   private configDir: string;
+       │           ^^^^^^^^^
+    14 │   private configFile: string;
+    15 │ 
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    13 │ ··private·readonly·configDir:·string;
+       │           +++++++++                  
+
+src\utils\config.ts:14:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'configFile' is never reassigned.
+  
+    12 │ export class ConfigManager {
+    13 │   private configDir: string;
+  > 14 │   private configFile: string;
+       │           ^^^^^^^^^^
+    15 │ 
+    16 │   constructor(configDir: string = PATHS.APP_DIR) {
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    14 │ ··private·readonly·configFile:·string;
+       │           +++++++++                   
+
+src\utils\formatting.ts:1:8 lint/complexity/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Avoid classes that contain only static members.
+  
+   > 1 │ export class Formatting {
+       │        ^^^^^^^^^^^^^^^^^^
+   > 2 │   static formatDuration(ms: number): string {
+   > 3 │     if (ms < 1000) {
+   > 4 │       return `${ms}ms`;
+        ...
+  > 48 │     return text.substring(0, maxLength - 3) + "...";
+  > 49 │   }
+  > 50 │ }
+       │ ^
+    51 │ 
+  
+  i Prefer using simple functions instead of classes with only static members.
+  
+
+src\utils\formatting.ts:15:5 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Block statements are preferred in this position.
+  
+    14 │   static formatBytes(bytes: number): string {
+  > 15 │     if (bytes === 0) return "0 B";
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    16 │     const k = 1024;
+    17 │     const sizes = ["B", "KB", "MB", "GB"];
+  
+  i Unsafe fix: Wrap the statement with a `JsBlockStatement`
+  
+    15 │ ····if·(bytes·===·0)·{·return·"0·B";·}
+       │                      ++             ++
+
+src\utils\formatting.ts:23:5 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Block statements are preferred in this position.
+  
+    22 │   static formatPercent(value: number, total: number): string {
+  > 23 │     if (total === 0) return "0%";
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    24 │     return `${((value / total) * 100).toFixed(1)}%`;
+    25 │   }
+  
+  i Unsafe fix: Wrap the statement with a `JsBlockStatement`
+  
+    23 │ ····if·(total·===·0)·{·return·"0%";·}
+       │                      ++            ++
+
+src\utils\formatting.ts:32:5 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Block statements are preferred in this position.
+  
+    30 │     width = 30
+    31 │   ): string {
+  > 32 │     if (total === 0) return "[ ]";
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    33 │     const filledWidth = Math.round((completed / total) * width);
+    34 │     const emptyWidth = width - filledWidth;
+  
+  i Unsafe fix: Wrap the statement with a `JsBlockStatement`
+  
+    32 │ ····if·(total·===·0)·{·return·"[·]";·}
+       │                      ++             ++
+
+src\utils\formatting.ts:47:5 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Block statements are preferred in this position.
+  
+    46 │   static truncate(text: string, maxLength: number): string {
+  > 47 │     if (text.length <= maxLength) return text;
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    48 │     return text.substring(0, maxLength - 3) + "...";
+    49 │   }
+  
+  i Unsafe fix: Wrap the statement with a `JsBlockStatement`
+  
+    47 │ ····if·(text.length·<=·maxLength)·{·return·text;·}
+       │                                   ++            ++
+
+src\utils\formatting.ts:48:12 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Template literals are preferred over string concatenation.
+  
+    46 │   static truncate(text: string, maxLength: number): string {
+    47 │     if (text.length <= maxLength) return text;
+  > 48 │     return text.substring(0, maxLength - 3) + "...";
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    49 │   }
+    50 │ }
+  
+  i Unsafe fix: Use a template literal.
+  
+    46 46 │     static truncate(text: string, maxLength: number): string {
+    47 47 │       if (text.length <= maxLength) return text;
+    48    │ - ····return·text.substring(0,·maxLength·-·3)·+·"...";
+       48 │ + ····return·`${text.substring(0,·maxLength·-·3)}...`;
+    49 49 │     }
+    50 50 │   }
+  
+
+src\utils\index.ts:1:1 lint/performance/noBarrelFile ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Avoid barrel files, they slow down performance, and cause large module graphs with modules that go unused.
+  
+  > 1 │ export * from "./colors";
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ export * from "./config";
+    3 │ export * from "./errors";
+  
+  i Check this thorough explanation to better understand the context.
+  
+
+src\utils\input-handler.ts:10:3 lint/suspicious/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × This async function lacks an await expression.
+  
+     9 │ export class InputHandler {
+  > 10 │   async getRepositoriesFromInteractive(): Promise<{
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 11 │     repos: RepositoryIdentifier[];
+        ...
+  > 70 │     });
+  > 71 │   }
+       │   ^
+    72 │ 
+    73 │   async getRepositoriesFromFile(filePath: string): Promise<{
+  
+  i Remove this async modifier, or add an await expression in the function.
+  
+     9 │ export class InputHandler {
+  > 10 │   async getRepositoriesFromInteractive(): Promise<{
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 11 │     repos: RepositoryIdentifier[];
+        ...
+  > 70 │     });
+  > 71 │   }
+       │   ^
+    72 │ 
+    73 │   async getRepositoriesFromFile(filePath: string): Promise<{
+  
+  i Async functions without await expressions may not need to be declared async.
+  
+
+src\utils\input-handler.ts:103:3 lint/suspicious/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × This async function lacks an await expression.
+  
+    101 │   }
+    102 │ 
+  > 103 │   async getRepositoriesFromStdin(): Promise<{
+        │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 104 │     repos: RepositoryIdentifier[];
+         ...
+  > 140 │     });
+  > 141 │   }
+        │   ^
+    142 │ 
+    143 │   async promptForConfirmation(message: string): Promise<boolean> {
+  
+  i Remove this async modifier, or add an await expression in the function.
+  
+    101 │   }
+    102 │ 
+  > 103 │   async getRepositoriesFromStdin(): Promise<{
+        │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 104 │     repos: RepositoryIdentifier[];
+         ...
+  > 140 │     });
+  > 141 │   }
+        │   ^
+    142 │ 
+    143 │   async promptForConfirmation(message: string): Promise<boolean> {
+  
+  i Async functions without await expressions may not need to be declared async.
+  
+
+src\utils\input-handler.ts:143:3 lint/suspicious/useAwait ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × This async function lacks an await expression.
+  
+    141 │   }
+    142 │ 
+  > 143 │   async promptForConfirmation(message: string): Promise<boolean> {
+        │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 144 │     return new Promise((resolve) => {
+         ...
+  > 156 │     });
+  > 157 │   }
+        │   ^
+    158 │ }
+    159 │ 
+  
+  i Remove this async modifier, or add an await expression in the function.
+  
+    141 │   }
+    142 │ 
+  > 143 │   async promptForConfirmation(message: string): Promise<boolean> {
+        │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 144 │     return new Promise((resolve) => {
+         ...
+  > 156 │     });
+  > 157 │   }
+        │   ^
+    158 │ }
+    159 │ 
+  
+  i Async functions without await expressions may not need to be declared async.
+  
+
+src\utils\logger.ts:1:32 lint/style/useNodejsImportProtocol  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × A Node.js builtin module should be imported with the node: protocol.
+  
+  > 1 │ import { promises as fs } from "fs";
+      │                                ^^^^
+    2 │ import winston from "winston";
+    3 │ import { DEFAULT_LOG_LEVEL } from "../constants/defaults";
+  
+  i Using the node: protocol is more explicit and signals that the imported module belongs to Node.js.
+  
+  i Unsafe fix: Add the node: protocol.
+  
+     1    │ - import·{·promises·as·fs·}·from·"fs";
+        1 │ + import·{·promises·as·fs·}·from·"node:fs";
+     2  2 │   import winston from "winston";
+     3  3 │   import { DEFAULT_LOG_LEVEL } from "../constants/defaults";
+  
+
+src\utils\parser.ts:125:12 lint/performance/useTopLevelRegex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × This regex literal is not defined in the top level scope. This can lead to performance issues if this function is called frequently.
+  
+    123 │     // Names cannot start with a hyphen or period
+    124 │     // Names must be 1-39 characters for owners, 1-100 for repos
+  > 125 │     return /^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$/.test(name);
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    126 │   }
+    127 │ }
+  
+  i Move the regex literal outside of this scope, and place it at the top level of this module, as a constant.
+  
+
+src\utils\parser.ts:7:8 lint/complexity/noStaticOnlyClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Avoid classes that contain only static members.
+  
+      5 │ const logger = getLogger();
+      6 │ 
+    > 7 │ export class URLParser {
+        │        ^^^^^^^^^^^^^^^^^
+    > 8 │   private static readonly GITHUB_URL_PATTERNS = [
+         ...
+  > 125 │     return /^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?$/.test(name);
+  > 126 │   }
+  > 127 │ }
+        │ ^
+    128 │ 
+  
+  i Prefer using simple functions instead of classes with only static members.
+  
+
+src\utils\progress.ts:14:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'startTime' is never reassigned.
+  
+    13 │ export class ProgressDisplay {
+  > 14 │   private startTime: number;
+       │           ^^^^^^^^^
+    15 │   private lastUpdate = 0;
+    16 │   private updateInterval = 500; // ms
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    14 │ ··private·readonly·startTime:·number;
+       │           +++++++++                  
+
+src\utils\progress.ts:14:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'startTime' is never reassigned.
+  
+    13 │ export class ProgressDisplay {
+  > 14 │   private startTime: number;
+       │           ^^^^^^^^^
+    15 │   private lastUpdate = 0;
+    16 │   private updateInterval = 500; // ms
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    14 │ ··private·readonly·startTime:·number;
+       │           +++++++++                  
+
+src\utils\progress.ts:16:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'updateInterval' is never reassigned.
+  
+    14 │   private startTime: number;
+    15 │   private lastUpdate = 0;
+  > 16 │   private updateInterval = 500; // ms
+       │           ^^^^^^^^^^^^^^
+    17 │ 
+    18 │   constructor() {
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    16 │ ··private·readonly·updateInterval·=·500;·//·ms
+       │           +++++++++                           
+
+src\utils\progress.ts:16:11 lint/style/useReadonlyClassProperties  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Member 'updateInterval' is never reassigned.
+  
+    14 │   private startTime: number;
+    15 │   private lastUpdate = 0;
+  > 16 │   private updateInterval = 500; // ms
+       │           ^^^^^^^^^^^^^^
+    17 │ 
+    18 │   constructor() {
+  
+  i Using readonly improves code safety, clarity, and helps prevent unintended mutations.
+  
+  i Unsafe fix: Add readonly decorator.
+  
+    16 │ ··private·readonly·updateInterval·=·500;·//·ms
+       │           +++++++++                           
+
+src\utils\progress.ts:77:5 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Block statements are preferred in this position.
+  
+    76 │   getEstimatedTimeRemaining(completed: number, total: number): string | null {
+  > 77 │     if (completed === 0) return null;
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    78 │ 
+    79 │     const elapsed = Date.now() - this.startTime;
+  
+  i Unsafe fix: Wrap the statement with a `JsBlockStatement`
+  
+    77 │ ····if·(completed·===·0)·{·return·null;·}
+       │                          ++            ++
+
+Checked 31 files in 87ms. No fixes applied.
+Found 62 errors.
+ci ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some errors were emitted while running checks.
+  

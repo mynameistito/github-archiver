@@ -1,0 +1,49 @@
+{
+  "name": "github-archiver",
+  "version": "1.0.0",
+  "description": "Archive GitHub repositories via CLI",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "github-archiver": "dist/index.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsx scripts/build.ts",
+    "dev": "tsx src/index.ts",
+    "lint": "ultracite check",
+    "format": "ultracite fix",
+    "fix": "ultracite fix",
+    "typecheck": "tsc --noEmit",
+    "tsc": "tsc --noEmit",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "prepublishOnly": "npm run build && npm run typecheck && npm run lint"
+  },
+  "dependencies": {
+    "commander": "^14.0.2",
+    "octokit": "^5.0.5",
+    "p-queue": "^9.1.0",
+    "winston": "^3.19.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.11",
+    "@types/node": "^25.0.6",
+    "esbuild": "^0.27.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "ultracite": "^7.0.11",
+    "vitest": "^4.0.16"
+  },
+  "keywords": [
+    "github",
+    "archive",
+    "cli",
+    "batch",
+    "typescript"
+  ],
+  "author": "mynameistito",
+  "license": "MIT"
+}
