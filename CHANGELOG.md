@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/mynameistito/github-archiver/compare/v1.0.4...v1.0.5) (2026-01-11)
+
+
+### Bug Fixes
+
+* build output as ESM to match package.json type ([e0aadd7](https://github.com/mynameistito/github-archiver/commit/e0aadd740c559333375e57b0f34e7e2d6a04240c))
+
 ## [1.0.4](https://github.com/mynameistito/github-archiver/compare/v1.0.3...v1.0.4) (2026-01-11)
 
 
