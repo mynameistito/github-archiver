@@ -26,7 +26,7 @@
     "changeset:version": "changeset version",
     "changeset:publish": "changeset publish",
     "release": "changeset publish",
-    "prepublishOnly": "bun run build && bun run typecheck && bun run lint"
+    "prepublishOnly": "npm run build && npm run typecheck && npm run lint"
   },
   "dependencies": {
     "commander": "^14.0.2",
