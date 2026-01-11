@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/mynameistito/github-archiver/compare/v1.0.5...v1.0.6) (2026-01-11)
+
+
+### Bug Fixes
+
+* ensure ESM output in bundled dist file ([48a242a](https://github.com/mynameistito/github-archiver/commit/48a242ad0b15c16e78c66aafab69ba84b64590b9))
+
 ## [1.0.5](https://github.com/mynameistito/github-archiver/compare/v1.0.4...v1.0.5) (2026-01-11)
 
 
