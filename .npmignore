@@ -1,0 +1,25 @@
+# Dependencies
+node_modules
+bun.lock
+package-lock.json
+
+# Development files
+.claude
+.github
+tests
+tsconfig.json
+
+# Build artifacts
+*.ts
+!dist/**/*.js
+
+# Documentation (optional)
+AGENTS.md
+CONTRIBUTING.md
+QUICKSTART.md
+issues.txt
+notes.md
+
+# Misc
+.gitignore
+.npmrc
