@@ -1,3 +1,10 @@
+# 1.0.0 (2026-01-11)
+
+
+### Bug Fixes
+
+* separate CLI wrapper to resolve ESM shebang conflict ([fc9918a](https://github.com/mynameistito/github-archiver/commit/fc9918a46953634b1ad15a0f64175937acb4f29b))
+
 # Changelog
 
 All notable changes to GitHub Archiver will be documented in this file.
