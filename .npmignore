@@ -9,6 +9,9 @@ package-lock.json
 tests
 tsconfig.json
 
+# Release management
+.changeset
+
 # Build artifacts
 *.ts
 !dist/**/*.js

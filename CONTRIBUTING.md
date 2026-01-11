@@ -9,8 +9,8 @@ Be respectful, inclusive, and constructive in all interactions.
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
-- npm or bun
+- Node.js 22+ 
+- bun
 - Git
 
 ### Setup Development Environment
@@ -21,12 +21,12 @@ git clone https://github.com/mynameistito/github-archiver.git
 cd github-archiver
 
 # Install dependencies
-npm install
+bun install
 
 # Verify setup
-npm run typecheck
-npm run test
-npm run build
+bun run typecheck
+bun run test
+bun run build
 ```
 
 ## Development Workflow
@@ -54,19 +54,19 @@ Follow the code standards below and make atomic commits with clear messages.
 
 ```bash
 # Run tests
-npm run test
+bun test
 
 # Check TypeScript
-npm run typecheck
+bun run typecheck
 
 # Check code style
-npm run lint
+bun run lint
 
 # Auto-format code
-npm run format
+bun run format
 
 # Build the project
-npm run build
+bun run build
 ```
 
 ### 4. Submit a Pull Request
@@ -122,25 +122,81 @@ This project uses **Ultracite** (Biome-based) code standards. Key principles:
 - Prefer specific imports over namespaces
 - Avoid barrel files (index.ts re-exports)
 
+## Release Process
+
+### Creating a Changeset
+
+When you've made changes that should be included in a release:
+
+1. **Create a changeset file:**
+   ```bash
+   bun run changeset:add
+   ```
+
+2. **Answer the prompts:**
+   - Which packages are affected? → Select `github-archiver`
+   - What's the type of change? → Choose:
+     - `patch` - bug fixes (1.0.0 → 1.0.1)
+     - `minor` - new features (1.0.0 → 1.1.0)
+     - `major` - breaking changes (1.0.0 → 2.0.0)
+   - Write a description of your change
+
+3. **Commit the generated changeset file:**
+   ```bash
+   git add .changeset/*.md
+   git commit -m "docs: add changeset for feature X"
+   ```
+
+4. **Push your branch and open a PR as usual**
+
+### Automated Release
+
+Once your PR is merged to `main`:
+
+1. GitHub Actions detects the changeset files
+2. Creates a "Version Packages" PR with:
+   - Updated `package.json` version
+   - Updated `CHANGELOG.md` with your descriptions
+   - Commit message ready to merge
+3. Merge the "Version Packages" PR
+4. GitHub Actions automatically:
+   - Publishes to npm
+   - Creates a GitHub release with automatic release notes
+   - Tags the commit with the version
+
+### Changeset File Format
+
+Example: `.changeset/excited-newts-talk.md`
+
+```markdown
+---
+"github-archiver": minor
+---
+
+Add support for custom GitHub token configuration in config file
+```
+
+**Note:** Changeset filenames are auto-generated with whimsical names. Feel free to edit the description after generation.
+
 ## Before Committing
 
 Always run these checks:
 
 ```bash
 # Format code
-npm run format
+bun run format
 
 # Type check
-npm run typecheck
+bun run typecheck
 
 # Run tests
-npm run test
+bun test
 
 # Lint
-npm run lint
+bun run lint
 
 # Build
-npm run build
+bun run build
 ```
 
 All of these must pass before submitting a PR.

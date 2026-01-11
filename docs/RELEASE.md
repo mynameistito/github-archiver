@@ -1,51 +1,158 @@
 # Release Process
 
-This document details the automated release process for GitHub Archiver CLI using semantic-release.
+This project uses **Changesets** for version management and publishing.
 
-## How Releases Work
+## Overview
 
-### 1. Commit Format
+The release process is **two-step and automated**:
 
-Use [Conventional Commits](https://www.conventionalcommits.org/):
+1. **Developer creates changesets** - Explicit intent for what's being released
+2. **GitHub Actions automates the rest** - Creates version PR, then publishes
 
-- `feat:` - New features → **minor** version bump (1.0.0 → 1.1.0)
-- `fix:` - Bug fixes → **patch** version bump (1.0.0 → 1.0.1)
-- `BREAKING CHANGE:` - Breaking changes → **major** version bump (1.0.0 → 2.0.0)
-- `chore:`, `docs:`, `test:` - No version bump
+## For Contributors
 
-### 2. Automatic Trigger
+### Creating a Changeset
 
-Push to `main` branch triggers the release workflow:
+When you've made changes that should be included in a release:
 
-1. Semantic release analyzes commits and determines version bump
-2. Package version is updated, published to npm
-3. GitHub release is created with changelog
-4. Git tag is created automatically
+1. **Create a changeset file:**
+   ```bash
+   bun run changeset:add
+   ```
 
-### 3. Trusted Publishing
+2. **Answer the prompts:**
+   - Which packages are affected? → Select `github-archiver`
+   - What's the type of change? → Choose:
+     - `patch` - bug fixes (1.0.0 → 1.0.1)
+     - `minor` - new features (1.0.0 → 1.1.0)
+     - `major` - breaking changes (1.0.0 → 2.0.0)
+   - Write a description of your change
 
-Uses OpenID Connect (OIDC) for secure, tokenless authentication:
+3. **Commit the generated changeset file:**
+   ```bash
+   git add .changeset/*.md
+   git commit -m "docs: add changeset for feature X"
+   ```
 
-- No npm tokens required - eliminates security risks
-- Short-lived, cryptographically-signed tokens for each publish
-- Works with personal GitHub accounts
+4. **Push your branch and open a PR as usual**
 
-### 4. Node Version Requirements
+### Automated Release
 
-- Package runs on Node 18+ (see `package.json` engines)
-- Release workflow uses Node 22+ (semantic-release requirement)
-- CI tests on Node 18 and 22 for maximum compatibility
+Once your PR is merged to `main`:
 
-### 5. Example Workflow
+1. GitHub Actions detects the changeset files
+2. Creates a "Version Packages" PR with:
+   - Updated `package.json` version
+   - Updated `CHANGELOG.md` with your descriptions
+   - GitHub links to commits and PRs
+3. Merge the "Version Packages" PR
+4. GitHub Actions automatically:
+   - Publishes to npm
+   - Creates a GitHub release
+   - Tags the commit with the version
+
+### Changeset File Format
+
+Example: `.changeset/excited-newts-talk.md`
+
+```markdown
+---
+"github-archiver": minor
+---
+
+Add support for custom GitHub token configuration in config file
+```
+
+**Note:** Changeset filenames are auto-generated with whimsical names (e.g., `silly-cats-dance.md`). Edit the description after generation if needed.
+
+## For Maintainers
+
+### Understanding Releases
+
+**What triggers a release?**
+- Any changeset file committed to main
+- Automatic via GitHub Actions (no manual intervention needed)
+
+**What happens?**
+1. Action detects changeset files
+2. Runs validation (tests, lint, typecheck, build)
+3. Creates "Version Packages" PR with:
+   - Version bumps in `package.json`
+   - Updated `CHANGELOG.md` with GitHub links
+   - Changeset files consumed
+4. After PR merge: Automatically publishes to npm
+
+### Merging the "Version Packages" PR
+
+When GitHub Actions creates a "Version Packages" PR:
+- Review the version bump (patch/minor/major)
+- Review the changelog entries with GitHub links
+- Merge to trigger automatic publish
+
+### Release Changelog
+
+The changelog is auto-generated with GitHub links:
+
+```markdown
+## 1.1.0
+
+### Minor Changes
+
+- [abc123d](https://github.com/mynameistito/github-archiver/commit/abc123d) ([#42](https://github.com/mynameistito/github-archiver/pull/42)): Add custom token config support
+```
+
+### Manual Publishing (if needed)
+
+If automation fails, you can publish manually on the commit with updated versions:
 
 ```bash
-git checkout main
-git pull
-# Make your commits with conventional format
-git commit -m "feat: add support for custom config file"
-git push
-# Release happens automatically!
+bun run changeset:publish
 ```
+
+### Troubleshooting
+
+**Action not creating PR?**
+- Check that changesets exist in `.changeset/` directory
+- Verify `GITHUB_TOKEN` and `NPM_TOKEN` secrets are configured
+- Review workflow logs in GitHub Actions
+
+**Publish failed?**
+- Verify `NPM_TOKEN` has publish permissions
+- Check npm registry status
+- Review the error in GitHub Actions logs
+
+**Version bump incorrect?**
+- Verify correct changeset type was selected (patch/minor/major)
+- Check that description was provided
+- Ensure changeset file syntax is valid (YAML front matter)
+
+## Versioning Strategy
+
+This project uses **Semantic Versioning**:
+
+- **patch**: Bug fixes, minor improvements (1.0.0 → 1.0.1)
+- **minor**: New features, backward compatible (1.0.0 → 1.1.0)
+- **major**: Breaking changes, incompatible updates (1.0.0 → 2.0.0)
+
+Choose the appropriate type when creating your changeset.
+
+## GitHub Releases
+
+After publishing, a GitHub Release is automatically created with:
+- Release notes generated from CHANGELOG.md
+- Direct link to the npm package
+- Git tag for the release (v1.1.0, etc.)
+
+## Environment & CI/CD
+
+**Required Secrets:**
+- `GITHUB_TOKEN` - Auto-provided by GitHub Actions
+- `NPM_TOKEN` - Set in repository settings with publish permissions
+
+**Node Version:** 22.x (tested on 24.x and 25.x in CI)  
+**Package Manager:** Bun
+
+**Publishing Method:** OIDC trusted publishing with npm
 
 ## Trusted Publishing Setup
 
@@ -64,60 +171,7 @@ This project uses npm's **Trusted Publishing** feature for secure, tokenless pac
 
 That's it! No tokens to manage, rotate, or worry about.
 
-## Commit Message Examples
+## See Also
 
-```bash
-# Feature (minor version bump)
-git commit -m "feat: add support for custom config file"
-
-# Bug fix (patch version bump)
-git commit -m "fix: handle empty repository list gracefully"
-
-# Breaking change (major version bump)
-git commit -m "feat!: change CLI command structure
-
-BREAKING CHANGE: The 'auth' subcommand is now required"
-
-# No release
-git commit -m "chore: update dependencies"
-git commit -m "docs: clarify installation steps"
-git commit -m "test: add unit tests for parser"
-```
-
-## Manual Releases
-
-If you need to publish without merging to main:
-
-```bash
-npm run release -- --no-ci
-```
-
-## Release Workflow Details
-
-The `.github/workflows/release.yml` file handles:
-
-- Running tests on Node 18 and 22
-- Building the project
-- Publishing to npm using Trusted Publishing
-- Creating GitHub releases with changelog
-- Managing version tags automatically
-
-## Troubleshooting
-
-### Release Not Triggered
-
-- Ensure commits follow conventional commit format
-- Check that workflow file is named `release.yml`
-- Verify GitHub Actions permissions are enabled
-
-### Publish Failed
-
-- Check npm Trusted Publisher configuration
-- Ensure package name in package.json matches npm registry
-- Verify semantic-release version range is valid
-
-### Version Bump Incorrect
-
-- Review commit history for proper prefixes
-- Check that `BREAKING CHANGE:` is in commit body (footer)
-- Ensure no duplicate release tags exist
+- [Contributing Guidelines](../CONTRIBUTING.md#release-process)
+- [Changesets Documentation](https://github.com/changesets/changesets)
