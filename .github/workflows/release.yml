@@ -49,11 +49,16 @@ jobs:
       - name: Build
         run: bun run build
 
+      - name: Configure npm for publishing
+        run: |
+          echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > ~/.npmrc
+          echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
+
       - name: Create Release Pull Request or Publish
         uses: changesets/action@v1
         with:
           version: bun run changeset:version
-          publish: bun run changeset:publish
+          publish: npx changeset publish
           commit: "chore: version packages"
           title: "chore: version packages"
         env:
