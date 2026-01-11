@@ -4,7 +4,7 @@ import { createAuthCommand } from "./commands/auth";
 import { PATHS } from "./constants/paths";
 import { createLogger, initializeLogger, setLogger } from "./utils/logger";
 
-const VERSION = "1.0.0";
+const VERSION = "1.0.6";
 const DESCRIPTION = "Archive GitHub repositories via CLI";
 
 async function main() {
