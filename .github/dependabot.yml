@@ -1,0 +1,76 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "UTC"
+      day:
+        - "monday"
+        - "tuesday"
+        - "wednesday"
+        - "thursday"
+        - "friday"
+    open-pull-requests-limit: 10
+    groups:
+      production-dependencies:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "vitest*"
+          - "@types/*"
+          - "typescript*"
+          - "tsx*"
+          - "esbuild*"
+          - "ultracite*"
+          - "@biomejs/biome*"
+      development-dependencies:
+        patterns:
+          - "vitest*"
+          - "@types/*"
+          - "typescript*"
+          - "tsx*"
+          - "esbuild*"
+          - "ultracite*"
+          - "@biomejs/biome*"
+    labels:
+      - "dependencies"
+      - "npm"
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
+    pull-request-branch-name:
+      separator: "-"
+    versioning-strategy: increase
+    allow:
+      - dependency-type: "all"
+    reviewers:
+      - "mynameistito"
+    assignees:
+      - "mynameistito"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "UTC"
+      day:
+        - "monday"
+        - "tuesday"
+        - "wednesday"
+        - "thursday"
+        - "friday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    reviewers:
+      - "mynameistito"
+    assignees:
+      - "mynameistito"

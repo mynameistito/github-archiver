@@ -1,5 +1,9 @@
 # GitHub Archiver CLI
 
+[![CI](https://github.com/mynameistito/github-archiver/actions/workflows/ci.yml/badge.svg)](https://github.com/mynameistito/github-archiver/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/github-archiver)](https://www.npmjs.com/package/github-archiver)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+
 A powerful command-line tool for mass archiving GitHub repositories with parallel processing, comprehensive error handling, and user-friendly feedback.
 
 ## Features
@@ -324,6 +328,84 @@ See `AGENTS.md` for detailed standards.
 ```bash
 npm run test              # Run all tests
 npm run test:coverage     # Run with coverage report
+```
+
+## Release Process
+
+This project uses **semantic-release** for automated versioning and publishing to npm.
+
+### How Releases Work
+
+1. **Commit Format**: Use [Conventional Commits](https://www.conventionalcommits.org/):
+   - `feat:` - New features → **minor** version bump (1.0.0 → 1.1.0)
+   - `fix:` - Bug fixes → **patch** version bump (1.0.0 → 1.0.1)
+   - `BREAKING CHANGE:` - Breaking changes → **major** version bump (1.0.0 → 2.0.0)
+   - `chore:`, `docs:`, `test:` - No version bump
+
+2. **Automatic Trigger**:
+   - Push to `main` branch triggers the release workflow
+   - Semantic release analyzes commits and determines version bump
+   - Package version is updated, published to npm
+   - GitHub release is created with changelog
+   - Git tag is created automatically
+
+3. **Trusted Publishing**:
+   - Uses OpenID Connect (OIDC) for secure, tokenless authentication
+   - No npm tokens required - eliminates security risks
+   - Short-lived, cryptographically-signed tokens for each publish
+   - Works with personal GitHub accounts
+
+4. **Example Workflow**:
+   ```bash
+   git checkout main
+   git pull
+   # Make your commits with conventional format
+   git commit -m "feat: add support for custom config file"
+   git push
+   # Release happens automatically!
+   ```
+
+### Trusted Publishing Setup
+
+This project uses npm's **Trusted Publishing** feature for secure, tokenless package publishing.
+
+**Setup (one-time):**
+1. Go to https://www.npmjs.com/package/github-archiver/settings
+2. Under **Trusted Publisher**, click **GitHub Actions**
+3. Fill in:
+   - **Organization or user**: `mynameistito`
+   - **Repository**: `github-archiver`
+   - **Workflow filename**: `release.yml`
+4. Click **Set up connection**
+5. (Recommended) Enable **"Require two-factor authentication and disallow tokens"**
+
+That's it! No tokens to manage, rotate, or worry about.</think></tool_call>
+
+### Commit Message Examples
+
+```bash
+# Feature (minor version bump)
+git commit -m "feat: add support for custom config file"
+
+# Bug fix (patch version bump)
+git commit -m "fix: handle empty repository list gracefully"
+
+# Breaking change (major version bump)
+git commit -m "feat!: change CLI command structure
+
+BREAKING CHANGE: The 'auth' subcommand is now required"
+
+# No release
+git commit -m "chore: update dependencies"
+git commit -m "docs: clarify installation steps"
+git commit -m "test: add unit tests for parser"
+```
+
+### Manual Releases
+
+If you need to publish without merging to main:
+```bash
+npm run release -- --no-ci
 ```
 
 ## Contributing
