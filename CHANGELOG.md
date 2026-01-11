@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/mynameistito/github-archiver/compare/v1.0.0...v1.0.1) (2026-01-11)
+
+
+### Bug Fixes
+
+* correct relative import path in CLI wrapper ([cc64796](https://github.com/mynameistito/github-archiver/commit/cc64796d2d0a06175faf053d63e9c1e8ffe0d371))
+
 # 1.0.0 (2026-01-11)
 
 
