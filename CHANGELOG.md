@@ -1,32 +1,41 @@
 ## [1.0.8](https://github.com/mynameistito/github-archiver/compare/v1.0.7...v1.0.8) (2026-01-11)
 
-## [1.0.7](https://github.com/mynameistito/github-archiver/compare/v1.0.6...v1.0.7) (2026-01-11)
+## 1.0.9
 
+### Patch Changes
+
+- [`230c310`](https://github.com/mynameistito/github-archiver/commit/230c3106625c6b4170aff58dc8a79ed78f7a6938) Thanks [@mynameistito](https://github.com/mynameistito)! - Migrate from semantic-release to @changesets/cli for better release control
+
+  - Replace semantic-release with @changesets/cli for explicit version management
+  - Add GitHub-linked changelog generation with PR/commit references
+  - Update to two-step release process (Version Packages PR + manual merge)
+  - Integrate with bun for improved package management
+  - Update Node requirement to 22+ (aligns with actual dependencies)
+  - Update CI/CD workflows to use bun exclusively
+
+## [1.0.7](https://github.com/mynameistito/github-archiver/compare/v1.0.6...v1.0.7) (2026-01-11)
 
 ### Bug Fixes
 
-* update version number in source code to match package.json ([f9ef48c](https://github.com/mynameistito/github-archiver/commit/f9ef48c344cf46e2ebb37141a9db211bddf57d47))
+- update version number in source code to match package.json ([f9ef48c](https://github.com/mynameistito/github-archiver/commit/f9ef48c344cf46e2ebb37141a9db211bddf57d47))
 
 ## [1.0.6](https://github.com/mynameistito/github-archiver/compare/v1.0.5...v1.0.6) (2026-01-11)
 
-
 ### Bug Fixes
 
-* ensure ESM output in bundled dist file ([48a242a](https://github.com/mynameistito/github-archiver/commit/48a242ad0b15c16e78c66aafab69ba84b64590b9))
+- ensure ESM output in bundled dist file ([48a242a](https://github.com/mynameistito/github-archiver/commit/48a242ad0b15c16e78c66aafab69ba84b64590b9))
 
 ## [1.0.5](https://github.com/mynameistito/github-archiver/compare/v1.0.4...v1.0.5) (2026-01-11)
 
-
 ### Bug Fixes
 
-* build output as ESM to match package.json type ([e0aadd7](https://github.com/mynameistito/github-archiver/commit/e0aadd740c559333375e57b0f34e7e2d6a04240c))
+- build output as ESM to match package.json type ([e0aadd7](https://github.com/mynameistito/github-archiver/commit/e0aadd740c559333375e57b0f34e7e2d6a04240c))
 
 ## [1.0.4](https://github.com/mynameistito/github-archiver/compare/v1.0.3...v1.0.4) (2026-01-11)
 
-
 ### Bug Fixes
 
-* add repository URL to package.json for npm provenance ([02ddb1c](https://github.com/mynameistito/github-archiver/commit/02ddb1c9f4b6a7b7ca91497b2633011accf94356))
+- add repository URL to package.json for npm provenance ([02ddb1c](https://github.com/mynameistito/github-archiver/commit/02ddb1c9f4b6a7b7ca91497b2633011accf94356))
 
 ## [1.0.3](https://github.com/mynameistito/github-archiver/compare/v1.0.2...v1.0.3) (2026-01-11)
 
@@ -34,17 +43,15 @@
 
 ## [1.0.1](https://github.com/mynameistito/github-archiver/compare/v1.0.0...v1.0.1) (2026-01-11)
 
-
 ### Bug Fixes
 
-* correct relative import path in CLI wrapper ([cc64796](https://github.com/mynameistito/github-archiver/commit/cc64796d2d0a06175faf053d63e9c1e8ffe0d371))
+- correct relative import path in CLI wrapper ([cc64796](https://github.com/mynameistito/github-archiver/commit/cc64796d2d0a06175faf053d63e9c1e8ffe0d371))
 
 # 1.0.0 (2026-01-11)
 
-
 ### Bug Fixes
 
-* separate CLI wrapper to resolve ESM shebang conflict ([fc9918a](https://github.com/mynameistito/github-archiver/commit/fc9918a46953634b1ad15a0f64175937acb4f29b))
+- separate CLI wrapper to resolve ESM shebang conflict ([fc9918a](https://github.com/mynameistito/github-archiver/commit/fc9918a46953634b1ad15a0f64175937acb4f29b))
 
 # Changelog
 
@@ -56,6 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-01-11
 
 ### Added
+
 - Initial release of GitHub Archiver CLI
 - Mass archive GitHub repositories with parallel processing
 - Three input methods: editor, file, and stdin
@@ -77,6 +85,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Biome formatting and linting enforcement
 
 ### Commands
+
 - `auth login` - Authenticate with GitHub
 - `auth logout` - Remove stored token
 - `auth status` - Check authentication status
@@ -84,6 +93,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `archive` - Archive repositories with multiple options
 
 ### Features
+
 - Parallel processing with p-queue
 - Retry logic with exponential backoff (1s → 2s → 4s)
 - Repository validation (exists, permissions, already archived)
@@ -93,6 +103,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for configuration files and comments in input
 
 ### Documentation
+
 - Comprehensive README with quick start guide
 - Installation instructions
 - Command reference with examples
@@ -101,6 +112,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Architecture overview
 
 ### Testing
+
 - 34 unit tests covering:
   - URL parsing (20+ tests)
   - Output formatting (15+ tests)
@@ -108,6 +120,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Vitest configuration for fast testing
 
 ### Code Quality
+
 - TypeScript strict mode enabled
 - 0 compilation errors
 - 0 implicit any types
@@ -119,6 +132,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Planned Features
+
 - [ ] Batch progress reporting with live updates
 - [ ] Support for organization-wide archiving
 - [ ] Integration tests for archive command
@@ -130,6 +144,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [ ] Undo/rollback capability (unarchive)
 
 ### Under Consideration
+
 - Docker image distribution
 - NPX support for one-time use
 - Scheduled archiving via cron
