@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { Command } from "commander";
 import { createArchiveCommand } from "./commands/archive";
 import { createAuthCommand } from "./commands/auth";

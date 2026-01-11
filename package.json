@@ -5,7 +5,7 @@
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "github-archiver": "dist/index.js"
+    "github-archiver": "bin/github-archiver.js"
   },
   "engines": {
     "node": ">=18.0.0"

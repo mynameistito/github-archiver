@@ -7,9 +7,6 @@ await build({
   target: "node18",
   outfile: "dist/index.js",
   external: ["octokit", "commander", "p-queue", "winston", "open"],
-  banner: {
-    js: "#!/usr/bin/env node\n",
-  },
   sourcemap: true,
   minify: true,
 });
