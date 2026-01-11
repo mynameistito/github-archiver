@@ -355,7 +355,12 @@ This project uses **semantic-release** for automated versioning and publishing t
    - Short-lived, cryptographically-signed tokens for each publish
    - Works with personal GitHub accounts
 
-4. **Example Workflow**:
+4. **Node Version Requirements**:
+   - Package runs on Node 18+ (see `package.json` engines)
+   - Release workflow uses Node 22+ (semantic-release requirement)
+   - CI tests on Node 18 and 22 for maximum compatibility
+
+5. **Example Workflow**:
    ```bash
    git checkout main
    git pull
