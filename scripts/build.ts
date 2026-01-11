@@ -5,6 +5,7 @@ await build({
   bundle: true,
   platform: "node",
   target: "node18",
+  format: "esm",
   outfile: "dist/index.js",
   external: ["octokit", "commander", "p-queue", "winston", "open"],
   sourcemap: true,
