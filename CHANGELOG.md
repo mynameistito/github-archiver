@@ -1,5 +1,16 @@
 ## [1.1.1](https://github.com/mynameistito/github-archiver/compare/v1.1.0...v1.1.1) (2026-01-12)
 
+## 1.1.5
+
+### Patch Changes
+
+- [`587569d`](https://github.com/mynameistito/github-archiver/commit/587569d6cf918c3396e58a9b3cf5d6efba9e149a) Thanks [@mynameistito](https://github.com/mynameistito)! - Fix changelog header detection in GitHub Release body extraction
+
+  - Distinguish between level 2 headers (## ) and level 3 headers (### ) in changelog
+  - Prevent '### Patch Changes' from being mistaken as version header boundary
+  - Ensure full changeset content is extracted and displayed in release body
+  - Fixes empty release description issue caused by incorrect header matching
+
 ## 1.1.4
 
 ### Patch Changes
