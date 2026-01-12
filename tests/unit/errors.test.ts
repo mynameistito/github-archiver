@@ -1,19 +1,19 @@
 import { describe, expect, test } from "bun:test";
+import { ArchiveError, ErrorCode } from "../../src/types";
 import {
-  isArchiveError,
-  getErrorMessage,
-  createAuthError,
-  createRepoNotFoundError,
   createAlreadyArchivedError,
+  createAuthError,
+  createConfigError,
+  createEditorError,
+  createFileError,
+  createInvalidUrlError,
+  createNetworkError,
   createPermissionError,
   createRateLimitError,
-  createNetworkError,
-  createInvalidUrlError,
-  createConfigError,
-  createFileError,
-  createEditorError,
+  createRepoNotFoundError,
+  getErrorMessage,
+  isArchiveError,
 } from "../../src/utils/errors";
-import { ArchiveError, ErrorCode } from "../../src/types";
 
 describe("Error utilities", () => {
   describe("isArchiveError", () => {

@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
-import { join } from "node:path";
 import { mkdtemp, rmdir } from "node:fs/promises";
 import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 /**
  * Create a temporary directory for testing

@@ -31,7 +31,7 @@ export function createArchiveCommand(): Command {
     });
 }
 
-async function archiveCommand(options: CommandOptions): Promise<void> {
+export async function archiveCommand(options: CommandOptions): Promise<void> {
   try {
     logger.info("Archive command started", { options });
 
@@ -87,7 +87,7 @@ async function archiveCommand(options: CommandOptions): Promise<void> {
   }
 }
 
-function validateOptions(options: CommandOptions): {
+export function validateOptions(options: CommandOptions): {
   concurrency: number;
   timeout: number;
 } {
@@ -107,7 +107,7 @@ function validateOptions(options: CommandOptions): {
   return { concurrency, timeout };
 }
 
-async function authenticateUser(
+export async function authenticateUser(
   authManager: AuthManager
 ): Promise<GitHubService> {
   console.log("🔐 Checking authentication...");
@@ -132,7 +132,7 @@ async function authenticateUser(
   }
 }
 
-async function getRepositories(
+export async function getRepositories(
   options: CommandOptions,
   inputHandler: InputHandler
 ): Promise<{
@@ -168,7 +168,7 @@ async function getRepositories(
   return { repositories, parseErrors };
 }
 
-function logParseErrors(
+export function logParseErrors(
   parseErrors: Array<{ url: string; error: string; line: number }>
 ): void {
   console.warn(`⚠️  Found ${parseErrors.length} invalid repositories:`);
@@ -178,7 +178,7 @@ function logParseErrors(
   console.warn("");
 }
 
-function showRepositoriesPreview(
+export function showRepositoriesPreview(
   repositories: RepositoryIdentifier[],
   dryRun: boolean
 ): void {
@@ -196,7 +196,7 @@ function showRepositoriesPreview(
   }
 }
 
-async function confirmOperation(
+export async function confirmOperation(
   options: CommandOptions,
   inputHandler: InputHandler
 ): Promise<void> {
@@ -215,7 +215,7 @@ async function confirmOperation(
   }
 }
 
-async function archiveRepositories(
+export async function archiveRepositories(
   archiver: Archiver,
   repositories: RepositoryIdentifier[],
   options: ArchiveOptions,
@@ -237,7 +237,7 @@ async function archiveRepositories(
   return results;
 }
 
-function displayResults(
+export function displayResults(
   archiver: Archiver,
   results: ArchiveResult[],
   progressDisplay: ProgressDisplay
@@ -279,7 +279,7 @@ function displayResults(
   }
 }
 
-function handleArchiveError(error: unknown): never {
+export function handleArchiveError(error: unknown): never {
   const message = error instanceof Error ? error.message : String(error);
   console.error(`❌ Error: ${message}`);
   logger.error("Archive command failed:", error);
@@ -289,7 +289,7 @@ function handleArchiveError(error: unknown): never {
   process.exit(1);
 }
 
-function provideErrorGuidance(message: string): void {
+export function provideErrorGuidance(message: string): void {
   const lowerMessage = message.toLowerCase();
 
   if (

@@ -1,12 +1,12 @@
-import { describe, expect, test, beforeEach, afterEach } from "bun:test";
+import { afterEach, beforeEach, describe, expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { join } from "node:path";
+import { ConfigManager } from "../../src/utils/config";
 import {
-  createTempDir,
   cleanupTempDir,
+  createTempDir,
   writeTempFile,
 } from "../helpers/temp-dir";
-import { ConfigManager } from "../../src/utils/config";
 
 describe("ConfigManager", () => {
   let tempDir: string;

@@ -1,12 +1,12 @@
 import { mock } from "bun:test";
 import type { Octokit } from "octokit";
-import type { GitHubService } from "../../src/services/github";
-import type { AuthManager } from "../../src/services/auth-manager";
 import type { Archiver } from "../../src/services/archiver";
+import type { AuthManager } from "../../src/services/auth-manager";
+import type { GitHubService } from "../../src/services/github";
 import type {
   ArchiveError,
-  RepositoryIdentifier,
   ArchiveResult,
+  RepositoryIdentifier,
 } from "../../src/types";
 
 /**

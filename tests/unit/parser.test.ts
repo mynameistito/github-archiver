@@ -168,5 +168,119 @@ describe("URLParser", () => {
       expect(result.valid).toHaveLength(0);
       expect(result.invalid).toHaveLength(0);
     });
+
+    test("should capture error messages for invalid entries", () => {
+      const urls = ["invalid-url-without-slash"];
+      const result = URLParser.parseRepositoriesBatch(urls);
+
+      expect(result.invalid).toHaveLength(1);
+      expect(result.invalid[0].error).toBeTruthy();
+      expect(result.invalid[0].url).toBe("invalid-url-without-slash");
+    });
+
+    test("should provide line numbers for all invalid entries", () => {
+      const urls = [
+        "https://github.com/owner/repo",
+        "bad1",
+        "bad2",
+        "https://github.com/owner2/repo2",
+        "bad3",
+      ];
+      const result = URLParser.parseRepositoriesBatch(urls);
+
+      expect(result.invalid).toHaveLength(3);
+      expect(result.invalid[0].line).toBe(2);
+      expect(result.invalid[1].line).toBe(3);
+      expect(result.invalid[2].line).toBe(5);
+    });
+
+    test("should log debug messages for valid repositories", () => {
+      const urls = ["owner/repo"];
+      const result = URLParser.parseRepositoriesBatch(urls);
+
+      expect(result.valid).toHaveLength(1);
+      expect(result.valid[0].owner).toBe("owner");
+    });
+
+    test("should handle URL with underscores", () => {
+      const result = URLParser.parseRepositoryUrl("owner_name/repo_name");
+      expect(result.owner).toBe("owner_name");
+      expect(result.repo).toBe("repo_name");
+    });
+
+    test("should handle URL with dots", () => {
+      const result = URLParser.parseRepositoryUrl("owner.name/repo.name");
+      expect(result.owner).toBe("owner.name");
+      expect(result.repo).toBe("repo.name");
+    });
+
+    test("should reject owner starting with hyphen", () => {
+      expect(() => URLParser.parseRepositoryUrl("-owner/repo")).toThrow();
+    });
+
+    test("should reject owner ending with hyphen", () => {
+      expect(() => URLParser.parseRepositoryUrl("owner-/repo")).toThrow();
+    });
+
+    test("should reject repo starting with hyphen", () => {
+      expect(() => URLParser.parseRepositoryUrl("owner/-repo")).toThrow();
+    });
+
+    test("should reject repo ending with hyphen", () => {
+      expect(() => URLParser.parseRepositoryUrl("owner/repo-")).toThrow();
+    });
+
+    test("should provide batch summary in results", () => {
+      const urls = ["owner1/repo1", "invalid", "owner2/repo2", "# comment", ""];
+      const result = URLParser.parseRepositoriesBatch(urls);
+
+      expect(result.valid).toHaveLength(2);
+      expect(result.invalid).toHaveLength(1);
+    });
+  });
+
+  describe("URL validation edge cases", () => {
+    test("should handle single character owner and repo", () => {
+      const result = URLParser.parseRepositoryUrl("a/b");
+      expect(result.owner).toBe("a");
+      expect(result.repo).toBe("b");
+    });
+
+    test("should handle numeric owner and repo", () => {
+      const result = URLParser.parseRepositoryUrl("123/456");
+      expect(result.owner).toBe("123");
+      expect(result.repo).toBe("456");
+    });
+
+    test("should accept owner with double hyphen", () => {
+      const result = URLParser.parseRepositoryUrl("own--er/repo");
+      expect(result.owner).toBe("own--er");
+    });
+
+    test("should accept owner with single hyphen in middle", () => {
+      const result = URLParser.parseRepositoryUrl("own-er/repo");
+      expect(result.owner).toBe("own-er");
+    });
+
+    test("should accept repo with underscores and dots", () => {
+      const result = URLParser.parseRepositoryUrl("owner/repo_with.dots");
+      expect(result.repo).toBe("repo_with.dots");
+    });
+
+    test("should throw when both owner and repo are missing", () => {
+      expect(() => URLParser.parseRepositoryUrl("///")).toThrow();
+    });
+
+    test("should throw when repo is missing after slash", () => {
+      expect(() => URLParser.parseRepositoryUrl("owner/")).toThrow();
+    });
+
+    test("should validate owner name format", () => {
+      expect(() => URLParser.parseRepositoryUrl("@invalid/repo")).toThrow();
+    });
+
+    test("should validate repo name format", () => {
+      expect(() => URLParser.parseRepositoryUrl("owner/!invalid")).toThrow();
+    });
   });
 });

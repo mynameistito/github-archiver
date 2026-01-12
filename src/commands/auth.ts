@@ -7,7 +7,7 @@ import { getLogger } from "../utils/logger";
 
 const authManager = new AuthManager(PATHS.APP_DIR);
 
-function createLoginCommand(): Command {
+export function createLoginCommand(): Command {
   return new Command("login")
     .description("Set up GitHub authentication with a Personal Access Token")
     .action(async () => {
@@ -40,7 +40,7 @@ function createLoginCommand(): Command {
     });
 }
 
-function createLogoutCommand(): Command {
+export function createLogoutCommand(): Command {
   return new Command("logout")
     .description("Remove stored GitHub authentication token")
     .action(async () => {
@@ -71,7 +71,7 @@ function createLogoutCommand(): Command {
     });
 }
 
-function createStatusCommand(): Command {
+export function createStatusCommand(): Command {
   return new Command("status")
     .description("Check authentication status")
     .action(async () => {
@@ -112,7 +112,7 @@ function createStatusCommand(): Command {
     });
 }
 
-function createValidateCommand(): Command {
+export function createValidateCommand(): Command {
   return new Command("validate")
     .description("Validate stored authentication token")
     .action(async () => {
@@ -146,7 +146,7 @@ function createValidateCommand(): Command {
     });
 }
 
-function promptForToken(): Promise<string> {
+export function promptForToken(): Promise<string> {
   return new Promise((resolve) => {
     const rl = createInterface({
       input: process.stdin,
@@ -160,7 +160,7 @@ function promptForToken(): Promise<string> {
   });
 }
 
-function confirmAction(message: string): Promise<boolean> {
+export function confirmAction(message: string): Promise<boolean> {
   return new Promise((resolve) => {
     const rl = createInterface({
       input: process.stdin,
