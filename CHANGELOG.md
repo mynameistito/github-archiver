@@ -1,5 +1,18 @@
 ## [1.1.1](https://github.com/mynameistito/github-archiver/compare/v1.1.0...v1.1.1) (2026-01-12)
 
+## 1.1.2
+
+### Patch Changes
+
+- [`7df5b1a`](https://github.com/mynameistito/github-archiver/commit/7df5b1a094c56380648da0c82d69dddbbf776468) Thanks [@mynameistito](https://github.com/mynameistito)! - Add explicit git tagging to release workflow and synchronize changelog
+
+  - Implement automatic version tag creation (v{version}) after successful npm publish
+  - Create and update 'latest' tag pointing to the most recent release
+  - Push both version and latest tags to remote for git history synchronization
+  - Ensure git tags are immediately available in the repository
+  - Update CHANGELOG with proper semantic versioning headers and GitHub compare links
+  - Improves consistency between git tags, npm releases, and GitHub releases
+
 ### Patch Changes
 
 - [`c91ebe7`](https://github.com/mynameistito/github-archiver/commit/c91ebe75bed07bb4226aff39f8b8841285c89573) Thanks [@mynameistito](https://github.com/mynameistito)! - Migrate from Vitest to Bun native testing ecosystem and replace @types/node with @types/bun
