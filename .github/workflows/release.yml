@@ -110,7 +110,6 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const path = require('path');
             
             // Read package.json to get version
             const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
@@ -119,25 +118,35 @@ jobs:
             
             // Read CHANGELOG.md
             const changelog = fs.readFileSync('./CHANGELOG.md', 'utf8');
+            const lines = changelog.split('\n');
             
-            // Extract release notes for the current version
-            // Look for the section starting with ## [version] or ## version
-            const versionRegex = new RegExp(
-              `## (?:\\[)?${version.replace(/\./g, '\\.')}(?:\\].*?)?\\n\\n([\\s\\S]*?)(?=## |$)`,
-              'm'
-            );
+            // Find the section for this version by looking for "## " followed by the version number
+            // This handles all formats: ## [1.1.2], ## 1.1.2, ## [1.1.2](link) (date), etc.
+            let startIdx = -1;
+            for (let i = 0; i < lines.length; i++) {
+              const line = lines[i];
+              // Check if line starts with ## and contains the version number
+              if (line.startsWith('##') && line.includes(version)) {
+                startIdx = i;
+                break;
+              }
+            }
             
-            const match = changelog.match(versionRegex);
-            let releaseBody = match ? match[1].trim() : '';
+            let releaseBody = 'No release notes available';
             
-            // If no match found, try without brackets and links
-            if (!releaseBody) {
-              const simpleRegex = new RegExp(
-                `## ${version.replace(/\./g, '\\.')}\\n\\n([\\s\\S]*?)(?=## |$)`,
-                'm'
-              );
-              const simpleMatch = changelog.match(simpleRegex);
-              releaseBody = simpleMatch ? simpleMatch[1].trim() : 'No release notes available';
+            if (startIdx !== -1) {
+              // Find the next ## header (end of this version's section)
+              let endIdx = lines.length;
+              for (let i = startIdx + 1; i < lines.length; i++) {
+                if (lines[i].startsWith('##')) {
+                  endIdx = i;
+                  break;
+                }
+              }
+              
+              // Extract content between headers and trim whitespace
+              const contentLines = lines.slice(startIdx + 1, endIdx);
+              releaseBody = contentLines.join('\n').trim();
             }
             
             // Create GitHub Release
