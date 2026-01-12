@@ -1,16 +1,16 @@
 [install]
-# Install settings inherited by tests
+# Install settings
 registry = "https://registry.npmjs.org/"
+# Use exact versions in lockfile for reproducible builds
+lockfile = "bun.lock"
 
 [env]
-# Environment variables for tests
+# Environment variables for tests and runtime
 NODE_ENV = "test"
 
 [test]
-# Test discovery
-root = "src"
-
-# Execution settings
+# Test discovery and execution
+root = "tests"
 timeout = 10000
 
 # Coverage configuration
@@ -22,5 +22,15 @@ coverageSkipTestFiles = true
 # Coverage path ignore patterns
 coveragePathIgnorePatterns = [
   "**/*.test.ts",
-  "**/*.spec.ts"
+  "**/*.spec.ts",
+  "**/node_modules/**"
 ]
+
+# Test environment
+env = "node"
+# Use Bun's test runner (default)
+run = "bun"
+
+[define]
+# Global constants for build/runtime
+"process.env.NODE_ENV" = "\"test\""

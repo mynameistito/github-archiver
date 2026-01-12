@@ -23,21 +23,29 @@ A powerful CLI for mass archiving GitHub repositories with parallel processing a
 npm install -g github-archiver
 ```
 
+or with Bun:
+
+```bash
+bun install -g github-archiver
+```
+
 ### From Source
 
 ```bash
 git clone https://github.com/mynameistito/github-archiver.git
 cd github-archiver
-npm install && npm run build
-npm install -g .
+bun install && bun run build
+bun install -g .
 ```
 
 ### Development
 
 ```bash
-npm install
-npm run dev -- <command>
+bun install
+bun run dev -- <command>
 ```
+
+**Note:** This project is optimized for [Bun](https://bun.sh). While it works with Node.js (v22+), Bun provides faster installation, execution, and development experience.
 
 ## Quick Start
 
@@ -55,11 +63,11 @@ github-archiver archive
 
 Manage GitHub authentication.
 
-| Command | Description |
-|---------|-------------|
-| `auth login` | Authenticate with Personal Access Token |
-| `auth logout` | Remove stored token |
-| `auth status` | Check authentication status |
+| Command        | Description                        |
+| -------------- | ---------------------------------- |
+| `auth login`   | Authenticate with Personal Access Token |
+| `auth logout`  | Remove stored token                |
+| `auth status`  | Check authentication status        |
 
 ### `archive`
 
@@ -69,15 +77,15 @@ Archive multiple repositories.
 github-archiver archive [options]
 ```
 
-| Option | Default | Description |
-|--------|---------|-------------|
-| `--file <path>` | - | Read repository URLs from file |
-| `--stdin` | - | Read from stdin |
-| `--dry-run` | false | Validate without archiving |
-| `--concurrency <n>` | 3 | Parallel operations (1-50) |
-| `--timeout <n>` | 300 | API timeout in seconds (10-3600) |
-| `--verbose` | false | Enable verbose logging |
-| `--force` | false | Skip confirmation prompts |
+| Option                | Default | Description                            |
+| --------------------- | ------- | -------------------------------------- |
+| `--file <path>`       | -       | Read repository URLs from file         |
+| `--stdin`             | -       | Read from stdin                        |
+| `--dry-run`           | false   | Validate without archiving             |
+| `--concurrency <n>`   | 3       | Parallel operations (1-50)             |
+| `--timeout <n>`       | 300     | API timeout in seconds (10-3600)       |
+| `--verbose`           | false   | Enable verbose logging                 |
+| `--force`             | false   | Skip confirmation prompts               |
 
 **Examples:**
 
@@ -148,16 +156,16 @@ Starting to archive repositories... (concurrency: 3)
 
 [=======================     ] 4/5 (80%) - owner/repo-3
 
-╔════════════════════════════════════╗
-║       Archive Operation Summary    ║
-╠════════════════════════════════════╣
-║ ✅ Successful:  5                  ║
-║ ⚠️  Skipped:     0                  ║
-║ ❌ Failed:      0                  ║
-╠════════════════════════════════════╣
-║ Total:         5                   ║
-║ Duration:      2m 45s              ║
-╚════════════════════════════════════╝
+┌────────────────────────────────────┐
+│  Archive Operation Summary         │
+├────────────────────────────────────┤
+│ Successful: 5                      │
+│ Skipped:    0                      │
+│ Failed:     0                      │
+├────────────────────────────────────┤
+│ Total:      5                      │
+│ Duration:   2m 45s                 │
+└────────────────────────────────────┘
 
 ✅ All repositories processed successfully!
 ```
@@ -217,12 +225,27 @@ tests/
 ## Development
 
 ```bash
+bun install
+
+# Development commands
+bun run typecheck    # Check TypeScript
+bun run test         # Run unit tests
+bun run test:coverage  # Run tests with coverage
+bun run build        # Build production bundle
+bun run lint         # Check code style
+bun run format       # Auto-format code
+bun run dev -- auth login  # Run dev mode
+```
+
+**Using npm instead?**
+
+```bash
 npm install
-npm run typecheck    # Check TypeScript
-npm run test         # Run unit tests
-npm run build        # Build production bundle
-npm run lint         # Check code style
-npm run format       # Auto-format code
+npm run typecheck    # Equivalent commands
+npm run test
+npm run build
+npm run lint
+npm run format
 ```
 
 ### Code Standards
@@ -233,7 +256,17 @@ This project uses **Ultracite** (Biome) for:
 - Consistent formatting
 - Comprehensive error handling
 
-See `AGENTS.md` for details.
+**Run code quality checks:**
+
+```bash
+# Check for issues
+bun run lint
+
+# Auto-fix and format code
+bun run format
+```
+
+See `AGENTS.md` for detailed code standards and best practices.
 
 ## Release Process
 
@@ -249,10 +282,21 @@ Pushing to `main` triggers automatic release. See [docs/RELEASE.md](docs/RELEASE
 
 ## Contributing
 
-1. Follow code standards (`npm run format`)
-2. Add tests for new features
-3. Ensure `npm run typecheck` and `npm run test` pass
-4. Create pull request with clear description
+1. Install dependencies: `bun install`
+2. Follow code standards: `bun run format`
+3. Add tests for new features
+4. Ensure `bun run typecheck` and `bun run test` pass
+5. Create pull request with clear description
+
+**Before committing:**
+
+```bash
+bun run format    # Auto-fix code style
+bun run lint      # Check for issues
+bun run typecheck # Verify TypeScript
+bun run test      # Run test suite
+bun run build     # Build production bundle
+```
 
 ## License
 
@@ -262,10 +306,22 @@ MIT - See LICENSE file for details.
 
 Check the [Troubleshooting](#troubleshooting) section or open an issue on GitHub.
 
+## Runtime & Tooling
+
+- **Runtime**: [Bun](https://bun.sh) (primary) or Node.js 22+
+- **Package Manager**: Bun (recommended) or npm
+- **Language**: TypeScript
+- **CLI Framework**: Commander.js
+- **GitHub API**: Octokit
+- **Logging**: Winston
+- **Code Quality**: Biome (via Ultracite preset)
+- **Task Queue**: p-queue
+- **Release Management**: Changesets
+
 ## Acknowledgments
 
-Built with TypeScript, Commander.js, Octokit, Winston, and Biome.
+Built with TypeScript, Commander.js, Octokit, Winston, Biome, and optimized for Bun runtime.
 
 ---
 
-Current version: 1.0.0 | [Releases](https://github.com/mynameistito/github-archiver/releases)
+[Releases](https://github.com/mynameistito/github-archiver/releases)

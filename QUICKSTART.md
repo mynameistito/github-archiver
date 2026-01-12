@@ -4,18 +4,34 @@ Get up and running with GitHub Archiver in 5 minutes.
 
 ## Step 1: Install
 
+### Global Installation
+
 ```bash
+# Using npm
 npm install -g github-archiver
+
+# Or using Bun (faster)
+bun install -g github-archiver
 ```
 
-Or for development:
+### For Development
+
 ```bash
 git clone https://github.com/mynameistito/github-archiver.git
 cd github-archiver
+
+# Using Bun (recommended)
+bun install
+bun run build
+bun run dev -- <command>
+
+# Or using npm
 npm install
 npm run build
 npm run dev -- <command>
 ```
+
+**Note:** This project is optimized for [Bun](https://bun.sh/). If you don't have Bun, install it from https://bun.sh
 
 ## Step 2: Get a GitHub Token
 
