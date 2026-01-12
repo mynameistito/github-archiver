@@ -103,3 +103,61 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git tag -f latest
           git push origin -f latest
+
+      - name: Extract release notes and create GitHub Release
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            // Read package.json to get version
+            const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+            const version = packageJson.version;
+            const tag = `v${version}`;
+            
+            // Read CHANGELOG.md
+            const changelog = fs.readFileSync('./CHANGELOG.md', 'utf8');
+            
+            // Extract release notes for the current version
+            // Look for the section starting with ## [version] or ## version
+            const versionRegex = new RegExp(
+              `## (?:\\[)?${version.replace(/\./g, '\\.')}(?:\\].*?)?\\n\\n([\\s\\S]*?)(?=## |$)`,
+              'm'
+            );
+            
+            const match = changelog.match(versionRegex);
+            let releaseBody = match ? match[1].trim() : '';
+            
+            // If no match found, try without brackets and links
+            if (!releaseBody) {
+              const simpleRegex = new RegExp(
+                `## ${version.replace(/\./g, '\\.')}\\n\\n([\\s\\S]*?)(?=## |$)`,
+                'm'
+              );
+              const simpleMatch = changelog.match(simpleRegex);
+              releaseBody = simpleMatch ? simpleMatch[1].trim() : 'No release notes available';
+            }
+            
+            // Create GitHub Release
+            try {
+              await github.rest.repos.createRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag_name: tag,
+                name: `Release ${version}`,
+                body: releaseBody,
+                draft: false,
+                prerelease: false
+              });
+              
+              console.log(`✅ Created GitHub Release for ${tag}`);
+            } catch (error) {
+              // Release might already exist, that's okay
+              if (error.status === 422) {
+                console.log(`ℹ️  Release for ${tag} already exists`);
+              } else {
+                throw error;
+              }
+            }
