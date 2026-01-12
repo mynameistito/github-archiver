@@ -128,34 +128,34 @@ jobs:
             const changelog = fs.readFileSync('./CHANGELOG.md', 'utf8');
             const lines = changelog.split('\n');
             
-            // Find the section for this version by looking for "## " followed by the version number
-            // This handles all formats: ## [1.1.2], ## 1.1.2, ## [1.1.2](link) (date), etc.
-            let startIdx = -1;
-            for (let i = 0; i < lines.length; i++) {
-              const line = lines[i];
-              // Check if line starts with ## and contains the version number
-              if (line.startsWith('##') && line.includes(version)) {
-                startIdx = i;
-                break;
-              }
-            }
-            
-            let releaseBody = 'No release notes available';
-            
-            if (startIdx !== -1) {
-              // Find the next ## header (end of this version's section)
-              let endIdx = lines.length;
-              for (let i = startIdx + 1; i < lines.length; i++) {
-                if (lines[i].startsWith('##')) {
-                  endIdx = i;
-                  break;
-                }
-              }
-              
-              // Extract content between headers and trim whitespace
-              const contentLines = lines.slice(startIdx + 1, endIdx);
-              releaseBody = contentLines.join('\n').trim();
-            }
+             // Find the section for this version by looking for "## " (level 2 header) with the version number
+             // This handles all formats: ## [1.1.2], ## 1.1.2, ## [1.1.2](link) (date), etc.
+             let startIdx = -1;
+             for (let i = 0; i < lines.length; i++) {
+               const line = lines[i];
+               // Check if line is a level 2 header (## but not ###) and contains the version number
+               if (line.startsWith('## ') && line.includes(version)) {
+                 startIdx = i;
+                 break;
+               }
+             }
+             
+             let releaseBody = 'No release notes available';
+             
+             if (startIdx !== -1) {
+               // Find the next level 2 header (## but not ###) - marks end of this version's section
+               let endIdx = lines.length;
+               for (let i = startIdx + 1; i < lines.length; i++) {
+                 if (lines[i].startsWith('## ') && !lines[i].startsWith('### ')) {
+                   endIdx = i;
+                   break;
+                 }
+               }
+               
+               // Extract content between headers and trim whitespace
+               const contentLines = lines.slice(startIdx + 1, endIdx);
+               releaseBody = contentLines.join('\n').trim();
+             }
             
             // Create GitHub Release
             try {
