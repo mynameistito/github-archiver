@@ -1,5 +1,24 @@
 ## [1.1.1](https://github.com/mynameistito/github-archiver/compare/v1.1.0...v1.1.1) (2026-01-12)
 
+## 1.1.4
+
+### Patch Changes
+
+- [`038d5d8`](https://github.com/mynameistito/github-archiver/commit/038d5d8aeeb3aec72eda9cba1d3f11d91cf6298f) Thanks [@mynameistito](https://github.com/mynameistito)! - Prevent git tag creation failure when tag already exists
+
+  - Add conditional check before creating version tags
+  - Skip tag creation if it already exists to avoid workflow errors
+  - Prevents "fatal: tag already exists" error in CI/CD pipeline
+  - Improves error handling and idempotency of release workflow
+
+- [`55c6264`](https://github.com/mynameistito/github-archiver/commit/55c6264fd859b1d95ff697a31d627bd9ca135161) Thanks [@mynameistito](https://github.com/mynameistito)! - Fix CHANGELOG parsing for GitHub Release body extraction
+
+  - Replace complex regex patterns with simple line-by-line parsing
+  - Handle all changelog header formats (with/without links, dates, brackets)
+  - Ensure release notes are properly populated in GitHub Release descriptions
+  - More reliable and maintainable changelog extraction logic
+  - Gracefully handles missing versions with fallback message
+
 ## 1.1.3
 
 ### Patch Changes
