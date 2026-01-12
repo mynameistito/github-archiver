@@ -1,0 +1,26 @@
+[install]
+# Install settings inherited by tests
+registry = "https://registry.npmjs.org/"
+
+[env]
+# Environment variables for tests
+NODE_ENV = "test"
+
+[test]
+# Test discovery
+root = "src"
+
+# Execution settings
+timeout = 10000
+
+# Coverage configuration
+coverage = true
+coverageReporter = ["text", "lcov"]
+coverageDir = "./coverage"
+coverageSkipTestFiles = true
+
+# Coverage path ignore patterns
+coveragePathIgnorePatterns = [
+  "**/*.test.ts",
+  "**/*.spec.ts"
+]

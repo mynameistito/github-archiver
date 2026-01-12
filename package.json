@@ -19,8 +19,8 @@
     "fix": "ultracite fix",
     "typecheck": "tsc --noEmit",
     "tsc": "tsc --noEmit",
-    "test": "vitest",
-    "test:coverage": "vitest --coverage",
+    "test": "bun test ./tests",
+    "test:coverage": "bun test --coverage ./tests",
     "changeset": "changeset",
     "changeset:add": "changeset add",
     "changeset:version": "changeset version",
@@ -43,8 +43,7 @@
     "esbuild": "^0.27.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "ultracite": "^7.0.11",
-    "vitest": "^4.0.16"
+    "ultracite": "^7.0.11"
   },
   "keywords": [
     "github",

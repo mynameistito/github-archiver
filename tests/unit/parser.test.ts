@@ -1,9 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, test } from "bun:test";
 import { URLParser } from "../../src/utils/parser";
 
 describe("URLParser", () => {
   describe("parseRepositoryUrl", () => {
-    it("should parse HTTPS GitHub URLs", () => {
+    test("should parse HTTPS GitHub URLs", () => {
       const result = URLParser.parseRepositoryUrl(
         "https://github.com/owner/repo"
       );
@@ -12,7 +12,7 @@ describe("URLParser", () => {
       expect(result.url).toBe("https://github.com/owner/repo");
     });
 
-    it("should parse HTTPS URLs with .git suffix", () => {
+    test("should parse HTTPS URLs with .git suffix", () => {
       const result = URLParser.parseRepositoryUrl(
         "https://github.com/owner/repo.git"
       );
@@ -20,7 +20,7 @@ describe("URLParser", () => {
       expect(result.repo).toBe("repo");
     });
 
-    it("should parse SSH URLs", () => {
+    test("should parse SSH URLs", () => {
       const result = URLParser.parseRepositoryUrl(
         "git@github.com:owner/repo.git"
       );
@@ -28,19 +28,19 @@ describe("URLParser", () => {
       expect(result.repo).toBe("repo");
     });
 
-    it("should parse shorthand owner/repo format", () => {
+    test("should parse shorthand owner/repo format", () => {
       const result = URLParser.parseRepositoryUrl("owner/repo");
       expect(result.owner).toBe("owner");
       expect(result.repo).toBe("repo");
     });
 
-    it("should parse URLs with special characters in names", () => {
+    test("should parse URLs with special characters in names", () => {
       const result = URLParser.parseRepositoryUrl("my-org/my-repo-123");
       expect(result.owner).toBe("my-org");
       expect(result.repo).toBe("my-repo-123");
     });
 
-    it("should handle case-insensitive domains", () => {
+    test("should handle case-insensitive domains", () => {
       const result = URLParser.parseRepositoryUrl(
         "HTTPS://GITHUB.COM/owner/repo"
       );
@@ -48,21 +48,21 @@ describe("URLParser", () => {
       expect(result.repo).toBe("repo");
     });
 
-    it("should throw error for empty URL", () => {
+    test("should throw error for empty URL", () => {
       expect(() => URLParser.parseRepositoryUrl("")).toThrow();
     });
 
-    it("should throw error for malformed URLs", () => {
+    test("should throw error for malformed URLs", () => {
       expect(() => URLParser.parseRepositoryUrl("invalid-url")).toThrow();
     });
 
-    it("should throw error for missing repo name", () => {
+    test("should throw error for missing repo name", () => {
       expect(() =>
         URLParser.parseRepositoryUrl("https://github.com/owner/")
       ).toThrow();
     });
 
-    it("should normalize URLs to HTTPS format", () => {
+    test("should normalize URLs to HTTPS format", () => {
       const http = URLParser.parseRepositoryUrl("http://github.com/owner/repo");
       const ssh = URLParser.parseRepositoryUrl("git@github.com:owner/repo.git");
       const short = URLParser.parseRepositoryUrl("owner/repo");
@@ -74,7 +74,7 @@ describe("URLParser", () => {
   });
 
   describe("parseRepositoriesBatch", () => {
-    it("should parse multiple valid URLs", () => {
+    test("should parse multiple valid URLs", () => {
       const urls = [
         "https://github.com/owner1/repo1",
         "git@github.com:owner2/repo2.git",
@@ -86,7 +86,7 @@ describe("URLParser", () => {
       expect(result.invalid).toHaveLength(0);
     });
 
-    it("should skip empty lines", () => {
+    test("should skip empty lines", () => {
       const urls = ["owner/repo1", "", "owner/repo2", "  "];
       const result = URLParser.parseRepositoriesBatch(urls);
 
@@ -94,7 +94,7 @@ describe("URLParser", () => {
       expect(result.invalid).toHaveLength(0);
     });
 
-    it("should skip comment lines", () => {
+    test("should skip comment lines", () => {
       const urls = [
         "# This is a comment",
         "owner/repo1",
@@ -107,7 +107,7 @@ describe("URLParser", () => {
       expect(result.invalid).toHaveLength(0);
     });
 
-    it("should handle mixed valid and invalid URLs", () => {
+    test("should handle mixed valid and invalid URLs", () => {
       const urls = ["owner/repo1", "invalid", "owner/repo2", "also-invalid"];
       const result = URLParser.parseRepositoriesBatch(urls);
 
@@ -115,21 +115,21 @@ describe("URLParser", () => {
       expect(result.invalid).toHaveLength(2);
     });
 
-    it("should include line numbers in errors", () => {
+    test("should include line numbers in errors", () => {
       const urls = ["owner/repo1", "invalid", "owner/repo2"];
       const result = URLParser.parseRepositoriesBatch(urls);
 
       expect(result.invalid[0].line).toBe(2);
     });
 
-    it("should handle empty batch", () => {
+    test("should handle empty batch", () => {
       const result = URLParser.parseRepositoriesBatch([]);
 
       expect(result.valid).toHaveLength(0);
       expect(result.invalid).toHaveLength(0);
     });
 
-    it("should handle batch with only comments and whitespace", () => {
+    test("should handle batch with only comments and whitespace", () => {
       const urls = ["# Comment", "", "  "];
       const result = URLParser.parseRepositoriesBatch(urls);
 
