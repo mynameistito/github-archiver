@@ -1,0 +1,54 @@
+name: Dependabot Changeset
+
+on:
+  pull_request:
+    paths:
+      - package.json
+      - package-lock.json
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  changeset:
+    name: Auto-create Changeset
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Generate changeset
+        run: bun tsx .changeset/generate-dependabot-changeset.ts "${{ github.event.pull_request.title }}"
+
+      - name: Commit changeset
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Check if there are any new files to commit
+          if git status --short | grep -q ".changeset/"; then
+            git add .changeset/
+            git commit -m "chore: add changeset for dependabot update [skip ci]"
+            git push
+          else
+            echo "ℹ️  No changeset file to commit"
+          fi
