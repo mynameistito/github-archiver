@@ -1,6 +1,6 @@
 {
   "name": "github-archiver",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Archive GitHub repositories via CLI",
   "type": "module",
   "main": "dist/index.js",
