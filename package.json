@@ -19,7 +19,7 @@
     "fix": "bunx ultracite fix",
     "typecheck": "bunx tsc --noEmit",
     "tsc": "bunx tsc --noEmit",
-    "test": "bun test ./tests",
+    "test": "bun test --run ./tests",
     "test:coverage": "bun test --coverage ./tests",
     "changeset": "bunx changeset",
     "changeset:add": "bunx changeset add",
