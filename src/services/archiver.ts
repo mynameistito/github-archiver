@@ -17,10 +17,11 @@ export class Archiver {
   private readonly gitHubService: GitHubService;
   private completed = 0;
   private failed = 0;
-  private readonly startTime = 0;
+  private readonly startTime: number;
 
   constructor(gitHubService: GitHubService, options: ArchiveOptions) {
     this.gitHubService = gitHubService;
+    this.startTime = Date.now();
     this.queue = new PQueue({
       concurrency: options.concurrency,
       timeout: options.timeout * 1000,
@@ -64,6 +65,7 @@ export class Archiver {
 
     try {
       if (options.dryRun) {
+        console.log(`🔍 Validating ${repo.owner}/${repo.repo}...`);
         logger.info(`[DRY-RUN] Would archive ${repo.owner}/${repo.repo}`);
         const result: ArchiveResult = {
           owner: repo.owner,

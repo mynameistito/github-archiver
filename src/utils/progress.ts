@@ -41,7 +41,6 @@ export class ProgressDisplay {
 
     return line;
   }
-
   getSummaryBox(summary: {
     successful: number;
     failed: number;
@@ -52,16 +51,27 @@ export class ProgressDisplay {
     const total = successful + failed + skipped;
     const duration = Formatting.formatDuration(totalDuration);
 
+    const createLine = (
+      label: string,
+      value: string,
+      extraPadding = 0
+    ): string => {
+      const valueStr = String(value);
+      const contentLength = label.length + valueStr.length;
+      const padding = 31 - contentLength + extraPadding;
+      return `║ ${label}${" ".repeat(Math.max(1, padding))}${valueStr} ║`;
+    };
+
     const lines = [
       "╔════════════════════════════════════╗",
       "║       Archive Operation Summary    ║",
       "╠════════════════════════════════════╣",
-      `║ ✅ Successful:  ${String(successful).padEnd(20)} ║`,
-      `║ ⚠️  Skipped:     ${String(skipped).padEnd(20)} ║`,
-      `║ ❌ Failed:      ${String(failed).padEnd(20)} ║`,
+      createLine("✅ Successful:", String(successful), 2),
+      createLine("⚠️ Skipped:", String(skipped), 3),
+      createLine("❌ Failed:", String(failed), 2),
       "╠════════════════════════════════════╣",
-      `║ Total:         ${String(total).padEnd(20)} ║`,
-      `║ Duration:      ${String(duration).padEnd(20)} ║`,
+      createLine("Total:", String(total), 3),
+      createLine("Duration:", duration, 3),
       "╚════════════════════════════════════╝",
     ];
 
