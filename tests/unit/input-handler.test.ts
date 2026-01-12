@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test, beforeEach, afterEach } from "bun:test";
 import { InputHandler } from "../../src/utils/input-handler";
 import {
   createTempDir,
@@ -8,6 +8,24 @@ import {
 
 describe("InputHandler", () => {
   let tempDir: string;
+  let originalLog: typeof console.log;
+
+  beforeEach(() => {
+    // Suppress console output during tests
+    originalLog = console.log;
+    console.log = () => {
+      // Suppress
+    };
+  });
+
+  afterEach(async () => {
+    // Restore console.log
+    console.log = originalLog;
+
+    if (tempDir) {
+      await cleanupTempDir(tempDir);
+    }
+  });
 
   describe("getRepositoriesFromFile", () => {
     test("should read and parse repositories from file", async () => {

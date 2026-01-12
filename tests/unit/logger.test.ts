@@ -1,4 +1,4 @@
-import { describe, expect, test, afterEach } from "bun:test";
+import { describe, expect, test, afterEach, beforeEach } from "bun:test";
 import { createTempDir, cleanupTempDir } from "../helpers/temp-dir";
 import {
   initializeLogger,
@@ -10,8 +10,32 @@ import {
 
 describe("Logger", () => {
   let tempDir: string;
+  let originalLog: typeof console.log;
+  let originalError: typeof console.error;
+  let originalWarn: typeof console.warn;
+
+  beforeEach(() => {
+    // Suppress console output during tests
+    originalLog = console.log;
+    originalError = console.error;
+    originalWarn = console.warn;
+    console.log = () => {
+      // Suppress
+    };
+    console.error = () => {
+      // Suppress
+    };
+    console.warn = () => {
+      // Suppress
+    };
+  });
 
   afterEach(async () => {
+    // Restore console methods
+    console.log = originalLog;
+    console.error = originalError;
+    console.warn = originalWarn;
+
     if (tempDir) {
       await cleanupTempDir(tempDir);
     }
