@@ -22,21 +22,17 @@ export class InputHandler {
       console.log("");
       console.log("📝 Enter repository URLs one at a time:");
       console.log(
-        '   (Type "done" when finished, or leave empty and press Enter to skip)'
+        "   (Press CTRL+D to finish, or leave empty and press Enter to skip)"
       );
       console.log("");
 
       const urls: string[] = [];
       let lineNumber = 1;
+      let isFinished = false;
 
       const promptNext = () => {
         rl.question(`[${lineNumber}] > `, (input) => {
           const trimmedInput = input.trim();
-
-          if (trimmedInput.toLowerCase() === "done") {
-            finishInput();
-            return;
-          }
 
           if (trimmedInput === "") {
             lineNumber++;
@@ -51,6 +47,10 @@ export class InputHandler {
       };
 
       const finishInput = () => {
+        if (isFinished) {
+          return;
+        }
+        isFinished = true;
         rl.close();
         const result = URLParser.parseRepositoriesBatch(urls);
 
