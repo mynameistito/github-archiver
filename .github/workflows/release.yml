@@ -62,44 +62,44 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-       - name: Publish to npm with OIDC
-         if: steps.changesets.outputs.hasChangesets == 'false'
-         run: |
-           # Check npm version (need 11.5.1+ for OIDC)
-           echo "npm version: $(npm --version)"
-           
-           # Remove any existing .npmrc that might interfere with OIDC
-           rm -f ~/.npmrc
-           rm -f .npmrc
-           
-           # Check if package version is already published
-           PACKAGE_NAME=$(node -p "require('./package.json').name")
-           LOCAL_VERSION=$(node -p "require('./package.json').version")
-           
-           # Get published version (returns empty if not found)
-           PUBLISHED_VERSION=$(npm view "$PACKAGE_NAME" version 2>/dev/null || echo "")
-           
-           if [ "$LOCAL_VERSION" != "$PUBLISHED_VERSION" ]; then
-             echo "Publishing $PACKAGE_NAME@$LOCAL_VERSION (current published: ${PUBLISHED_VERSION:-none})"
-             npm publish --access public
-           else
-             echo "Version $LOCAL_VERSION is already published, skipping"
-           fi
+      - name: Publish to npm with OIDC
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: |
+          # Check npm version (need 11.5.1+ for OIDC)
+          echo "npm version: $(npm --version)"
+          
+          # Remove any existing .npmrc that might interfere with OIDC
+          rm -f ~/.npmrc
+          rm -f .npmrc
+          
+          # Check if package version is already published
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          LOCAL_VERSION=$(node -p "require('./package.json').version")
+          
+          # Get published version (returns empty if not found)
+          PUBLISHED_VERSION=$(npm view "$PACKAGE_NAME" version 2>/dev/null || echo "")
+          
+          if [ "$LOCAL_VERSION" != "$PUBLISHED_VERSION" ]; then
+            echo "Publishing $PACKAGE_NAME@$LOCAL_VERSION (current published: ${PUBLISHED_VERSION:-none})"
+            npm publish --access public
+          else
+            echo "Version $LOCAL_VERSION is already published, skipping"
+          fi
 
-       - name: Create version tag
-         if: steps.changesets.outputs.hasChangesets == 'false'
-         run: |
-           VERSION=$(node -p "require('./package.json').version")
-           echo "Creating tag v${VERSION}"
-           git config --local user.name "github-actions[bot]"
-           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-           git tag "v${VERSION}"
-           git push origin "v${VERSION}"
+      - name: Create version tag
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "Creating tag v${VERSION}"
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git tag "v${VERSION}"
+          git push origin "v${VERSION}"
 
-       - name: Update latest tag
-         if: steps.changesets.outputs.hasChangesets == 'false'
-         run: |
-           git config --local user.name "github-actions[bot]"
-           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-           git tag -f latest
-           git push origin -f latest
+      - name: Update latest tag
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -f latest
+          git push origin -f latest
