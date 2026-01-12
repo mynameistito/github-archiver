@@ -90,4 +90,27 @@ describe("Formatting", () => {
       expect(Formatting.truncate("hello", 5)).toBe("hello");
     });
   });
+
+  describe("centerText", () => {
+    test("should center text with padding", () => {
+      const result = Formatting.centerText("hello", 15);
+      expect(result).toContain("hello");
+      expect(result.length).toBeGreaterThanOrEqual(5);
+    });
+
+    test("should not add padding for small width", () => {
+      const result = Formatting.centerText("hello", 3);
+      expect(result).toBe("hello");
+    });
+
+    test("should handle zero width", () => {
+      const result = Formatting.centerText("hello", 0);
+      expect(result).toBe("hello");
+    });
+
+    test("should handle equal width and text length", () => {
+      const result = Formatting.centerText("hello", 5);
+      expect(result).toBe("hello");
+    });
+  });
 });

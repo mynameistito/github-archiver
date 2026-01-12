@@ -71,6 +71,38 @@ describe("URLParser", () => {
       expect(ssh.url).toBe("https://github.com/owner/repo");
       expect(short.url).toBe("https://github.com/owner/repo");
     });
+
+    test("should throw error for invalid owner name", () => {
+      expect(() => URLParser.parseRepositoryUrl("-invalid/repo")).toThrow();
+      expect(() => URLParser.parseRepositoryUrl("@owner/repo")).toThrow();
+    });
+
+    test("should throw error for invalid repo name", () => {
+      expect(() => URLParser.parseRepositoryUrl("owner/-invalid")).toThrow();
+      expect(() => URLParser.parseRepositoryUrl("owner/repo!")).toThrow();
+    });
+
+    test("should handle whitespace in URL", () => {
+      const result = URLParser.parseRepositoryUrl("  owner/repo  ");
+      expect(result.owner).toBe("owner");
+      expect(result.repo).toBe("repo");
+    });
+
+    test("should parse URLs with www subdomain", () => {
+      const result = URLParser.parseRepositoryUrl(
+        "https://www.github.com/owner/repo"
+      );
+      expect(result.owner).toBe("owner");
+      expect(result.repo).toBe("repo");
+    });
+
+    test("should parse URLs with trailing slash", () => {
+      const result = URLParser.parseRepositoryUrl(
+        "https://github.com/owner/repo/"
+      );
+      expect(result.owner).toBe("owner");
+      expect(result.repo).toBe("repo");
+    });
   });
 
   describe("parseRepositoriesBatch", () => {
