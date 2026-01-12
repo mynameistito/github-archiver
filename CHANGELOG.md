@@ -1,5 +1,18 @@
 ## [1.1.1](https://github.com/mynameistito/github-archiver/compare/v1.1.0...v1.1.1) (2026-01-12)
 
+## 1.1.3
+
+### Patch Changes
+
+- [`a7d1b2e`](https://github.com/mynameistito/github-archiver/commit/a7d1b2e77c754ccf4302f4db6c28c39d9e47cb34) Thanks [@mynameistito](https://github.com/mynameistito)! - Create GitHub Release with changeset description on new tag
+
+  - Add automated GitHub Release creation for each version tag
+  - Extract release notes from CHANGELOG.md and include in release body
+  - Display full changeset description with commits, contributors, and changes
+  - Handle multiple changelog header formats (with and without markdown links)
+  - Gracefully handle existing releases without breaking workflow
+  - Improve release visibility and accessibility on GitHub
+
 ## 1.1.2
 
 ### Patch Changes
