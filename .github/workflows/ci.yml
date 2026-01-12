@@ -69,5 +69,5 @@ jobs:
         run: bun install
 
       - name: Run Security Audit
-        run: bun pm audit --audit-level moderate
+        run: bun audit --audit-level moderate
         continue-on-error: true
