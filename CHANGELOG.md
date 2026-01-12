@@ -1,5 +1,24 @@
 ## [1.0.8](https://github.com/mynameistito/github-archiver/compare/v1.0.7...v1.0.8) (2026-01-11)
 
+## 1.1.0
+
+### Minor Changes
+
+- [`3322224`](https://github.com/mynameistito/github-archiver/commit/3322224c8518cf6ce3a0a9afbbcbe3b283c5427d) Thanks [@mynameistito](https://github.com/mynameistito)! - Replace 'done' text input with CTRL+D hotkey
+
+  - Remove 'done' command requirement for finishing repository input
+  - Implement native CTRL+D (EOF) signal handling via readline close event
+  - Add guard flag to prevent double execution
+  - Update help text to guide users to press CTRL+D instead of typing 'done'
+  - Maintains cross-platform compatibility (Windows, Mac, Linux)
+
+- [`3322224`](https://github.com/mynameistito/github-archiver/commit/3322224c8518cf6ce3a0a9afbbcbe3b283c5427d) Thanks [@mynameistito](https://github.com/mynameistito)! - Improve dry-run logging with console output and fix summary box alignment
+
+  - Add console output to dry-run validation to show progress in real-time (🔍 emoji)
+  - Fix startTime initialization in Archiver to properly calculate operation duration
+  - Refactor summary box formatting with dynamic padding that accounts for emoji character widths
+  - Ensure all numeric values in summary box are properly right-aligned
+
 ## 1.0.9
 
 ### Patch Changes
