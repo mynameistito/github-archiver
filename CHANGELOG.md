@@ -1,5 +1,19 @@
 ## [1.1.1](https://github.com/mynameistito/github-archiver/compare/v1.1.0...v1.1.1) (2026-01-12)
 
+## 1.2.0
+
+### Minor Changes
+
+- [`6948c29`](https://github.com/mynameistito/github-archiver/commit/6948c29abe67508b817a84cd95c4f88d89afdb5c) Thanks [@mynameistito](https://github.com/mynameistito)! - Migrate to Bun runtime and enhance documentation
+
+  - Migrate all npm scripts to use Bun for faster development and execution
+  - Replace tsx with native Bun TypeScript support
+  - Add comprehensive Bun installation and development documentation
+  - Improve README with Bun-first approach and npm fallback
+  - Enhance bunfig.toml configuration for better test setup
+  - Update build target to Node.js 22+
+  - Fix output formatting for improved readability
+
 ## 1.1.5
 
 ### Patch Changes
