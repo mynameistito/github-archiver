@@ -12,6 +12,7 @@ permissions:
   contents: write
   pull-requests: write
   id-token: write
+  packages: write
 
 jobs:
   release:
@@ -86,6 +87,32 @@ jobs:
             echo "Version $LOCAL_VERSION is already published, skipping"
           fi
 
+      - name: Publish to GitHub Packages with OIDC
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: |
+          # Get version info
+          LOCAL_VERSION=$(node -p "require('./package.json').version")
+          SCOPED_PACKAGE_NAME='@mynameistito/github-archiver'
+          
+          echo "Attempting to publish $SCOPED_PACKAGE_NAME@$LOCAL_VERSION to GitHub Packages"
+          
+          # Create a temporary package.json with scoped name
+          node -e "
+            const fs = require('fs');
+            const pkg = require('./package.json');
+            pkg.name = '@mynameistito/github-archiver';
+            fs.writeFileSync('./package-gh.json', JSON.stringify(pkg, null, 2) + '\n');
+            console.log('Created temporary package.json with scoped name');
+          "
+          
+          # Publish using GitHub Packages registry and auth token
+          npm publish ./package-gh.json --registry https://npm.pkg.github.com --access public || true
+          
+          # Cleanup temporary file
+          rm -f package-gh.json
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create version tag
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
@@ -128,34 +155,34 @@ jobs:
             const changelog = fs.readFileSync('./CHANGELOG.md', 'utf8');
             const lines = changelog.split('\n');
             
-             // Find the section for this version by looking for "## " (level 2 header) with the version number
-             // This handles all formats: ## [1.1.2], ## 1.1.2, ## [1.1.2](link) (date), etc.
-             let startIdx = -1;
-             for (let i = 0; i < lines.length; i++) {
-               const line = lines[i];
-               // Check if line is a level 2 header (## but not ###) and contains the version number
-               if (line.startsWith('## ') && line.includes(version)) {
-                 startIdx = i;
-                 break;
-               }
-             }
-             
-             let releaseBody = 'No release notes available';
-             
-             if (startIdx !== -1) {
-               // Find the next level 2 header (## but not ###) - marks end of this version's section
-               let endIdx = lines.length;
-               for (let i = startIdx + 1; i < lines.length; i++) {
-                 if (lines[i].startsWith('## ') && !lines[i].startsWith('### ')) {
-                   endIdx = i;
-                   break;
-                 }
-               }
-               
-               // Extract content between headers and trim whitespace
-               const contentLines = lines.slice(startIdx + 1, endIdx);
-               releaseBody = contentLines.join('\n').trim();
-             }
+            // Find the section for this version by looking for "## " (level 2 header) with the version number
+            // This handles all formats: ## [1.1.2], ## 1.1.2, ## [1.1.2](link) (date), etc.
+            let startIdx = -1;
+            for (let i = 0; i < lines.length; i++) {
+              const line = lines[i];
+              // Check if line is a level 2 header (## but not ###) and contains the version number
+              if (line.startsWith('## ') && line.includes(version)) {
+                startIdx = i;
+                break;
+              }
+            }
+            
+            let releaseBody = 'No release notes available';
+            
+            if (startIdx !== -1) {
+              // Find the next level 2 header (## but not ###) - marks end of this version's section
+              let endIdx = lines.length;
+              for (let i = startIdx + 1; i < lines.length; i++) {
+                if (lines[i].startsWith('## ') && !lines[i].startsWith('### ')) {
+                  endIdx = i;
+                  break;
+                }
+              }
+              
+              // Extract content between headers and trim whitespace
+              const contentLines = lines.slice(startIdx + 1, endIdx);
+              releaseBody = contentLines.join('\n').trim();
+            }
             
             // Create GitHub Release
             try {
