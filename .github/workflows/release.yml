@@ -96,6 +96,9 @@ jobs:
           
           echo "Attempting to publish $SCOPED_PACKAGE_NAME@$LOCAL_VERSION to GitHub Packages"
           
+          # Configure npm to use GitHub token for GitHub Packages registry
+          npm config set '//npm.pkg.github.com/:_authToken' "${NODE_AUTH_TOKEN}"
+          
           # Temporarily modify package.json with scoped name
           node -e "
             const fs = require('fs');
