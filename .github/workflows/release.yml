@@ -90,26 +90,33 @@ jobs:
       - name: Publish to GitHub Packages with OIDC
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
-          # Get version info
+          # Get version info and save original package name
           LOCAL_VERSION=$(node -p "require('./package.json').version")
           SCOPED_PACKAGE_NAME='@mynameistito/github-archiver'
           
           echo "Attempting to publish $SCOPED_PACKAGE_NAME@$LOCAL_VERSION to GitHub Packages"
           
-          # Create a temporary package.json with scoped name
+          # Temporarily modify package.json with scoped name
           node -e "
             const fs = require('fs');
             const pkg = require('./package.json');
+            global.originalName = pkg.name;
             pkg.name = '@mynameistito/github-archiver';
-            fs.writeFileSync('./package-gh.json', JSON.stringify(pkg, null, 2) + '\n');
-            console.log('Created temporary package.json with scoped name');
+            fs.writeFileSync('./package.json', JSON.stringify(pkg, null, 2) + '\n');
+            console.log('Changed package name to scoped for GitHub Packages');
           "
           
-          # Publish using GitHub Packages registry and auth token
-          npm publish ./package-gh.json --registry https://npm.pkg.github.com --access public || true
+          # Publish to GitHub Packages registry
+          npm publish --registry https://npm.pkg.github.com --access public || true
           
-          # Cleanup temporary file
-          rm -f package-gh.json
+          # Restore original package name
+          node -e "
+            const fs = require('fs');
+            const pkg = require('./package.json');
+            pkg.name = 'github-archiver';
+            fs.writeFileSync('./package.json', JSON.stringify(pkg, null, 2) + '\n');
+            console.log('Restored original package name');
+          "
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
