@@ -1,5 +1,11 @@
 ## [1.1.1](https://github.com/mynameistito/github-archiver/compare/v1.1.0...v1.1.1) (2026-01-12)
 
+## 1.5.1
+
+### Patch Changes
+
+- [#12](https://github.com/mynameistito/github-archiver/pull/12) [`23948d1`](https://github.com/mynameistito/github-archiver/commit/23948d152cd2bfa5f42074b45477c338981f80ce) Thanks [@mynameistito](https://github.com/mynameistito)! - Update dependencies
+
 ## 1.5.0
 
 ### Minor Changes
