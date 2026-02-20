@@ -1,24 +1,24 @@
 export interface Config {
-  token?: string;
   concurrency: number;
-  timeout: number;
-  logLevel: "debug" | "info" | "warn" | "error";
-  logDir: string;
   configDir: string;
+  logDir: string;
+  logLevel: "debug" | "info" | "warn" | "error";
+  timeout: number;
+  token?: string;
 }
 
 export interface StoredCredentials {
-  token: string;
-  savedAt: string;
   githubUser?: string;
+  savedAt: string;
+  token: string;
 }
 
 export interface CommandOptions {
-  file?: string;
-  stdin?: boolean;
-  dryRun: boolean;
   concurrency: string;
+  dryRun: boolean;
+  file?: string;
+  force: boolean;
+  stdin?: boolean;
   timeout: string;
   verbose: boolean;
-  force: boolean;
 }

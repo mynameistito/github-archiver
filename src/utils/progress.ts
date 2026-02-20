@@ -2,12 +2,12 @@ import { Formatting } from "./formatting";
 
 export interface ProgressUpdate {
   completed: number;
-  failed: number;
-  total: number;
   current?: {
     owner: string;
     repo: string;
   };
+  failed: number;
+  total: number;
 }
 
 export class ProgressDisplay {
