@@ -1,5 +1,11 @@
 ## [1.1.1](https://github.com/mynameistito/github-archiver/compare/v1.1.0...v1.1.1) (2026-01-12)
 
+## 1.5.2
+
+### Patch Changes
+
+- [#14](https://github.com/mynameistito/github-archiver/pull/14) [`d76e709`](https://github.com/mynameistito/github-archiver/commit/d76e709ca56284f6ebf3b321a9c53fdd6f5f6853) Thanks [@mynameistito](https://github.com/mynameistito)! - Bump Dependencies
+
 ## 1.5.1
 
 ### Patch Changes
