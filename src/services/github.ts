@@ -13,13 +13,13 @@ import { getLogger } from "../utils/logger";
 const logger = getLogger();
 
 interface OctokitError {
-  status: number;
+  message: string;
   response?: {
     data?: {
       message: string;
     };
   };
-  message: string;
+  status: number;
 }
 
 export class GitHubService {

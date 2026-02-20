@@ -5,30 +5,30 @@ export interface RepositoryIdentifier {
 }
 
 export interface ArchiveResult {
+  archived: boolean;
+  duration: number;
+  error?: Error | string;
+  message: string;
   owner: string;
   repo: string;
   success: boolean;
-  archived: boolean;
-  error?: Error | string;
-  duration: number;
-  message: string;
 }
 
 export interface ArchiveOptions {
-  dryRun: boolean;
   concurrency: number;
-  timeout: number;
+  dryRun: boolean;
   force: boolean;
+  timeout: number;
   verbose: boolean;
 }
 
 export interface RateLimitInfo {
+  limit: number;
   remaining: number;
   reset: Date;
-  limit: number;
 }
 
 export interface GitHubError extends Error {
-  status: number;
   code: string;
+  status: number;
 }
