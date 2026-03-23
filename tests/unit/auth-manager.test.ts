@@ -99,10 +99,10 @@ describe("AuthManager", () => {
         const token = await authManager.getToken();
         expect(token).toBe("env-token-test");
       } finally {
-        if (originalToken !== undefined) {
-          process.env.GH_TOKEN = originalToken;
-        } else {
+        if (originalToken === undefined) {
           process.env.GH_TOKEN = undefined as unknown as string;
+        } else {
+          process.env.GH_TOKEN = originalToken;
         }
       }
     });
