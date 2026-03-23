@@ -1,5 +1,11 @@
 ## [1.1.1](https://github.com/mynameistito/github-archiver/compare/v1.1.0...v1.1.1) (2026-01-12)
 
+## 1.5.3
+
+### Patch Changes
+
+- [#16](https://github.com/mynameistito/github-archiver/pull/16) [`9858a63`](https://github.com/mynameistito/github-archiver/commit/9858a639634c35fc044f933b7f455a93dd39d37f) Thanks [@mynameistito](https://github.com/mynameistito)! - bump dep, fix ultracite issue
+
 ## 1.5.2
 
 ### Patch Changes
