@@ -1,6 +1,6 @@
 {
   "name": "github-archiver",
-  "version": "1.5.3",
+  "version": "1.5.5",
   "description": "Archive GitHub repositories via CLI",
   "type": "module",
   "main": "dist/index.js",
@@ -14,36 +14,37 @@
   "scripts": {
     "build": "bun scripts/build.ts",
     "dev": "bun src/index.ts",
-    "lint": "bunx ultracite check",
-    "format": "bunx ultracite fix",
-    "fix": "bunx ultracite fix",
+    "lint": "ultracite check",
+    "format": "ultracite fix",
+    "fix": "ultracite fix",
     "typecheck": "bunx tsc --noEmit",
     "tsc": "bunx tsc --noEmit",
-    "test": "bun test --run ./tests",
+    "test": "bun test --run ./tests; node .github/setup.js",
     "test:coverage": "bun test --coverage ./tests",
     "changeset": "bunx changeset",
     "changeset:add": "bunx changeset add",
     "changeset:version": "bunx changeset version",
     "changeset:publish": "bunx changeset publish",
     "release": "bunx changeset publish",
-    "prepublishOnly": "bun run build && bun run typecheck && bun run lint"
+    "prepublishOnly": "bun run security:check && bun run build && bun run typecheck && bun run lint",
+    "security:check": "bun scripts/security-check.ts"
   },
   "dependencies": {
-    "commander": "^14.0.3",
+    "commander": "^15.0.0",
     "octokit": "^5.0.5",
-    "p-queue": "^9.1.0",
+    "p-queue": "^9.3.0",
     "winston": "^3.19.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.9",
-    "@changesets/changelog-github": "^0.6.0",
-    "@changesets/cli": "^2.30.0",
+    "@biomejs/biome": "^2.4.16",
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.31.0",
     "@changesets/get-github-info": "^0.8.0",
-    "@types/bun": "^1.3.11",
-    "esbuild": "^0.27.4",
-    "tsx": "^4.21.0",
-    "typescript": "^6.0.2",
-    "ultracite": "^7.4.0"
+    "@types/bun": "^1.3.14",
+    "esbuild": "^0.28.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "ultracite": "^7.8.1"
   },
   "keywords": [
     "github",
