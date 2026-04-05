@@ -43,7 +43,7 @@
     "esbuild": "^0.28.0",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2",
-    "ultracite": "^7.4.2"
+    "ultracite": "^7.4.3"
   },
   "keywords": [
     "github",
