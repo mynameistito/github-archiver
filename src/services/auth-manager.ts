@@ -58,7 +58,7 @@ export class AuthManager {
         valid: true,
         user: data.login,
       };
-    } catch (_error) {
+    } catch {
       return {
         valid: false,
       };
