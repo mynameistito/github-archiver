@@ -1,5 +1,20 @@
 ## [1.1.1](https://github.com/mynameistito/github-archiver/compare/v1.1.0...v1.1.1) (2026-01-12)
 
+## 1.5.4
+
+### Patch Changes
+
+- [#20](https://github.com/mynameistito/github-archiver/pull/20) [`c2ab39f`](https://github.com/mynameistito/github-archiver/commit/c2ab39f1937791b40b4e3167498fb401425d6c0c) Thanks [@mynameistito](https://github.com/mynameistito)! - Updated dependencies:
+
+  - p-queue: ^9.1.0 → ^9.1.1
+
+- [#22](https://github.com/mynameistito/github-archiver/pull/22) [`e7f8b33`](https://github.com/mynameistito/github-archiver/commit/e7f8b33ea1b6db40eb055d863c9a46fb6db00670) Thanks [@mynameistito](https://github.com/mynameistito)! - Updated dependencies:
+
+  - p-queue: ^9.1.1 → ^9.1.2
+
+- [#32](https://github.com/mynameistito/github-archiver/pull/32) [`1b83e90`](https://github.com/mynameistito/github-archiver/commit/1b83e90fb46abd8419aaf43e242122126985caff) Thanks [@mynameistito](https://github.com/mynameistito)! - Updated dependencies:
+  - p-queue: ^9.1.2 → ^9.2.0
+
 ## 1.5.3
 
 ### Patch Changes
