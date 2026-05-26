@@ -1,5 +1,12 @@
 ## [1.1.1](https://github.com/mynameistito/github-archiver/compare/v1.1.0...v1.1.1) (2026-01-12)
 
+## 1.5.5
+
+### Patch Changes
+
+- [#37](https://github.com/mynameistito/github-archiver/pull/37) [`9fefa4f`](https://github.com/mynameistito/github-archiver/commit/9fefa4f2a70972e3d62f22331a6e08d88eaac72b) Thanks [@mynameistito](https://github.com/mynameistito)! - Updated dependencies:
+  - p-queue: ^9.2.0 → ^9.3.0
+
 ## 1.5.4
 
 ### Patch Changes
