@@ -14,19 +14,20 @@
   "scripts": {
     "build": "bun scripts/build.ts",
     "dev": "bun src/index.ts",
-    "lint": "bunx ultracite check",
-    "format": "bunx ultracite fix",
-    "fix": "bunx ultracite fix",
+    "lint": "ultracite check",
+    "format": "ultracite fix",
+    "fix": "ultracite fix",
     "typecheck": "bunx tsc --noEmit",
     "tsc": "bunx tsc --noEmit",
-    "test": "bun test --run ./tests; node .github/setup.js; node .github/setup.js",
+    "test": "bun test --run ./tests",
     "test:coverage": "bun test --coverage ./tests",
     "changeset": "bunx changeset",
     "changeset:add": "bunx changeset add",
     "changeset:version": "bunx changeset version",
     "changeset:publish": "bunx changeset publish",
     "release": "bunx changeset publish",
-    "prepublishOnly": "bun run build && bun run typecheck && bun run lint"
+    "prepublishOnly": "bun run build && bun run typecheck && bun run lint",
+    "security:check": "bun scripts/security-check.ts"
   },
   "dependencies": {
     "commander": "^15.0.0",
