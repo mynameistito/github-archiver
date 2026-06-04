@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, lstatSync, readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const root = process.cwd();
@@ -27,7 +27,7 @@ const collectFiles = (directory: string) => {
     }
 
     const path = join(directory, entry);
-    const stats = statSync(path);
+    const stats = lstatSync(path);
     if (stats.isDirectory()) {
       collectFiles(path);
       continue;
@@ -69,4 +69,3 @@ if (violations.length > 0) {
 }
 
 console.log("Security check passed");
-

@@ -26,7 +26,7 @@
     "changeset:version": "bunx changeset version",
     "changeset:publish": "bunx changeset publish",
     "release": "bunx changeset publish",
-    "prepublishOnly": "bun run build && bun run typecheck && bun run lint",
+    "prepublishOnly": "bun run security:check && bun run build && bun run typecheck && bun run lint",
     "security:check": "bun scripts/security-check.ts"
   },
   "dependencies": {
