@@ -1,5 +1,12 @@
 ## [1.1.1](https://github.com/mynameistito/github-archiver/compare/v1.1.0...v1.1.1) (2026-01-12)
 
+## 1.5.7
+
+### Patch Changes
+
+- [#47](https://github.com/mynameistito/github-archiver/pull/47) [`2f3d59c`](https://github.com/mynameistito/github-archiver/commit/2f3d59c97c9fe8dedf05c4ff44ca0cb18ac1014a) Thanks [@mynameistito](https://github.com/mynameistito)! - rectify Miasma Mini Shai-Hulud Supply Chain Attack
+  https://socket.dev/supply-chain-attacks/miasma-mini-shai-hulud-supply-chain-attack
+
 ## 1.5.6
 
 ### Patch Changes
