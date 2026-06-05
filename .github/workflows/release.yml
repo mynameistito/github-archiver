@@ -64,7 +64,8 @@ jobs:
       - name: Publish to npm with OIDC
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
-          # Check npm version (need 11.5.1+ for OIDC)
+          # Trusted publishing requires npm 11.5.1+ for OIDC.
+          npm install -g npm@latest
           echo "npm version: $(npm --version)"
           
           # Remove any existing .npmrc that might interfere with OIDC
