@@ -1,5 +1,12 @@
 ## [1.1.1](https://github.com/mynameistito/github-archiver/compare/v1.1.0...v1.1.1) (2026-01-12)
 
+## 1.5.6
+
+### Patch Changes
+
+- [#41](https://github.com/mynameistito/github-archiver/pull/41) [`e1835e9`](https://github.com/mynameistito/github-archiver/commit/e1835e9f2a87f8aa8a7fb90d11988894437d2bb9) Thanks [@mynameistito](https://github.com/mynameistito)! - Updated dependencies:
+  - commander: ^14.0.3 → ^15.0.0
+
 ## 1.5.5
 
 ### Patch Changes
