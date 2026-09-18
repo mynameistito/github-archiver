@@ -40,15 +40,28 @@ jobs:
         run: bun tsx .changeset/generate-dependabot-changeset.ts "${{ github.event.pull_request.title }}"
 
       - name: Commit changeset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # Check if there are any new files to commit
-          if git status --short | grep -q ".changeset/"; then
-            git add .changeset/
-            git commit -m "chore: add changeset for dependabot update [skip ci]"
-            git push
-          else
+          set -euo pipefail
+          # Collect the changeset files the generate step created.
+          mapfile -t files < <(git status --porcelain --untracked-files=all -- .changeset/ | awk '{print $NF}')
+          if [ "${#files[@]}" -eq 0 ]; then
             echo "ℹ️  No changeset file to commit"
+            exit 0
           fi
+          # Every branch requires verified commits, so create the commit through
+          # the API: a commit the Actions bot makes with no custom author or
+          # committer is signed by GitHub and satisfies the required_signatures rule.
+          branch="${GITHUB_HEAD_REF}"
+          base_sha="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/heads/${branch}" --jq .object.sha)"
+          base_tree="$(gh api "repos/${GITHUB_REPOSITORY}/git/commits/${base_sha}" --jq .tree.sha)"
+          entries="[]"
+          for file in "${files[@]}"; do
+            blob_sha="$(jq -n --arg content "$(base64 -w0 "${file}")" '{content: $content, encoding: "base64"}' | gh api "repos/${GITHUB_REPOSITORY}/git/blobs" --input - --jq .sha)"
+            entries="$(jq -c --arg path "${file}" --arg sha "${blob_sha}" '. + [{path: $path, mode: "100644", type: "blob", sha: $sha}]' <<<"${entries}")"
+          done
+          tree_sha="$(jq -n --arg base "$base_tree" --argjson tree "$entries" '{base_tree: $base, tree: $tree}' | gh api "repos/${GITHUB_REPOSITORY}/git/trees" --input - --jq .sha)"
+          commit_sha="$(jq -n --arg msg "chore: add changeset for dependabot update [skip ci]" --arg tree "$tree_sha" --arg parent "$base_sha" '{message: $msg, tree: $tree, parents: [$parent]}' | gh api "repos/${GITHUB_REPOSITORY}/git/commits" --input - --jq .sha)"
+          gh api -X PATCH "repos/${GITHUB_REPOSITORY}/git/refs/heads/${branch}" -f sha="${commit_sha}"
+          echo "Committed changeset as ${commit_sha}"
