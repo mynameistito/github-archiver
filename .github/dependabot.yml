@@ -6,12 +6,6 @@ updates:
       interval: "daily"
       time: "09:00"
       timezone: "UTC"
-      day:
-        - "monday"
-        - "tuesday"
-        - "wednesday"
-        - "thursday"
-        - "friday"
     open-pull-requests-limit: 10
     groups:
       production-dependencies:
@@ -57,12 +51,6 @@ updates:
       interval: "daily"
       time: "09:00"
       timezone: "UTC"
-      day:
-        - "monday"
-        - "tuesday"
-        - "wednesday"
-        - "thursday"
-        - "friday"
     open-pull-requests-limit: 5
     labels:
       - "dependencies"
